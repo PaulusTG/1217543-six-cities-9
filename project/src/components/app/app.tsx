@@ -6,35 +6,53 @@ import FavoritesPage from '../favorites-page/favorites-page';
 import OfferPage from '../offer-page/offer-page';
 import NotFoundPage from '../not-found-page/not-found-page';
 import PrivateRoute from '../private-route/private-route';
+import { Offer } from '../../types/offer';
 
 type AppProps = {
   placesCount: number;
+  offers: Offer[];
 }
 
-function App({ placesCount }: AppProps): JSX.Element {
+function App({ placesCount, offers }: AppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
         <Route
           path={AppRoute.Main}
-          element={<MainPage placesCount={placesCount} />}
+          element={
+            <MainPage
+              placesCount={placesCount}
+              offers={offers}
+              pagePath={AppRoute.Main}
+            />
+          }
         />
         <Route
           path={AppRoute.Login}
           element={<LoginPage />}
         />
-        <PrivateRoute
-          authorizationStatus={AuthorizationStatus.NoAuth}
-        >
-          <Route
-            path={AppRoute.Favorites}
-            element={<FavoritesPage />}
-          />
-        </PrivateRoute>
+        <Route
+          path={AppRoute.Favorites}
+          element={
+            <PrivateRoute
+              authorizationStatus={AuthorizationStatus.Auth}
+            >
+              <FavoritesPage
+                offers={offers}
+                pagePath={AppRoute.Favorites}
+              />
+            </PrivateRoute>
+          }
+        />
         <Route
           path={AppRoute.Room}
-          element={<OfferPage />}
-        />
+          element={<OfferPage offers={offers} />}
+        >
+          <Route
+            path=':id'
+            element={<OfferPage offers={offers} />}
+          />
+        </Route>
         <Route
           path='*'
           element={<NotFoundPage />}
