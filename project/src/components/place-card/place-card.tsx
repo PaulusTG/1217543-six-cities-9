@@ -12,7 +12,7 @@ function PlaceCard({ offer, pagePath }: PlaceCardProps): JSX.Element {
   const { id, previewImage, isPremium, isFavorite,
     price, rating, title, type } = offer;
 
-  const [activeCard, setActiveCard] = useState(0);
+  const [activeCard, setActiveCard] = useState<number | null>(null);
 
   const imgSize = {
     width: pagePath === AppRoute.Favorites ? '150' : '260',
