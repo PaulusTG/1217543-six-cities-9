@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { MouseEvent, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../consts';
 import { Offer } from '../../types/offer';
@@ -6,9 +6,10 @@ import { Offer } from '../../types/offer';
 type PlaceCardProps = {
   offer: Offer;
   pagePath: string;
+  onPlacesListHover: (placeCardId: number) => void;
 };
 
-function PlaceCard({ offer, pagePath }: PlaceCardProps): JSX.Element {
+function PlaceCard({ offer, pagePath, onPlacesListHover }: PlaceCardProps): JSX.Element {
   const { id, previewImage, isPremium, isFavorite,
     price, rating, title, type } = offer;
 
@@ -19,7 +20,9 @@ function PlaceCard({ offer, pagePath }: PlaceCardProps): JSX.Element {
     height: pagePath === AppRoute.Favorites ? '110' : '200',
   };
 
-  const onCardMouseOver = () => {
+  const onCardMouseEnter = (evt: MouseEvent<HTMLElement>) => {
+    evt.preventDefault();
+    onPlacesListHover(id);
     setActiveCard(id);
   };
 
@@ -27,7 +30,7 @@ function PlaceCard({ offer, pagePath }: PlaceCardProps): JSX.Element {
     <article
       key={id}
       className={`${pagePath === AppRoute.Favorites ? 'favorites__card' : 'cities__place-card'} place-card`}
-      onMouseOver={onCardMouseOver}
+      onMouseEnter={onCardMouseEnter}
     >
       {isPremium ? <div className="place-card__mark"><span>Premium</span></div> : ''}
       <div className={`${pagePath === AppRoute.Favorites ? 'favorites' : 'cities'}__image-wrapper place-card__image-wrapper`}>
@@ -50,8 +53,8 @@ function PlaceCard({ offer, pagePath }: PlaceCardProps): JSX.Element {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{ width: '80%' }}></span>
-            <span className="visually-hidden">Rating {rating}</span>
+            <span style={{ width: `${Math.round(rating) * 20}%` }}></span>
+            <span className="visually-hidden">Rating</span>
           </div>
         </div>
         <h2 className="place-card__name">
