@@ -8,7 +8,7 @@ import 'leaflet/dist/leaflet.css';
 type MapProps = {
   city: City;
   points: Location[];
-  selectedPoint: Location | undefined;
+  selectedPoint: Location | undefined | null;
 };
 
 const defaultCustomIcon = new Icon({
@@ -38,8 +38,8 @@ function Map({ city, points, selectedPoint }: MapProps): JSX.Element {
         marker
           .setIcon(
             selectedPoint !== undefined &&
-              point.latitude === selectedPoint.latitude &&
-              point.longitude === selectedPoint.longitude
+              point.latitude === selectedPoint?.latitude &&
+              point.longitude === selectedPoint?.longitude
               ? currentCustomIcon
               : defaultCustomIcon,
           )

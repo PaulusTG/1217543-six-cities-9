@@ -33,7 +33,7 @@ function FavoritesPage({ offers, pagePath }: FavoritesPageProps): JSX.Element {
                   <PlacesList
                     offers={favoritesOffers}
                     pagePath={pagePath}
-                    onPlacesListHover={() => undefined}
+                    onPlacesListHover={() => null}
                   />
                 </div>
               </li>

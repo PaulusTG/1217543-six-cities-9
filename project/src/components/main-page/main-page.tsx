@@ -18,7 +18,7 @@ function MainPage({ placesCount, offers, cities, pagePath }: MainPageProps): JSX
   const currentCity = cities.filter((city) => city.name === 'Amsterdam')[0];
   const points = offers.map((offer) => offer.location);
 
-  const [selectedPoint, setSelectedPoint] = useState<Location | undefined>(undefined);
+  const [selectedPoint, setSelectedPoint] = useState<Location | null | undefined>(null);
 
   const onPlacesListHover = (placeCardId: number) => {
     const currentPlace = offers.find((offer) => offer.id === placeCardId);
