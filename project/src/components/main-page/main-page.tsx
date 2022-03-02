@@ -1,15 +1,31 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../consts';
+import { City } from '../../types/city';
+import { Location } from '../../types/location';
 import { Offer } from '../../types/offer';
+import Map from '../map/map';
 import PlacesList from '../places-list/places-list';
 
 type MainPageProps = {
   placesCount: number;
   offers: Offer[];
+  cities: City[];
   pagePath: string;
 }
 
-function MainPage({ placesCount, offers, pagePath }: MainPageProps): JSX.Element {
+function MainPage({ placesCount, offers, cities, pagePath }: MainPageProps): JSX.Element {
+  const currentCity = cities.filter((city) => city.name === 'Amsterdam')[0];
+  const points = offers.map((offer) => offer.location);
+
+  const [selectedPoint, setSelectedPoint] = useState<Location | null | undefined>(null);
+
+  const onPlacesListHover = (placeCardId: number) => {
+    const currentPlace = offers.find((offer) => offer.id === placeCardId);
+
+    setSelectedPoint(currentPlace?.location);
+  };
+
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -102,11 +118,16 @@ function MainPage({ placesCount, offers, pagePath }: MainPageProps): JSX.Element
                 < PlacesList
                   offers={offers}
                   pagePath={pagePath}
+                  onPlacesListHover={onPlacesListHover}
                 />
               </div>
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+              < Map
+                city={currentCity}
+                points={points}
+                selectedPoint={selectedPoint}
+              />
             </div>
           </div>
         </div>

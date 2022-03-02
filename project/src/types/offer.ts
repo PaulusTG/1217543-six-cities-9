@@ -1,3 +1,7 @@
+import { City } from './city';
+import { Host } from './host';
+import { Location } from './location';
+
 export type Offer = {
   id: number,
   previewImage: string,
@@ -12,18 +16,7 @@ export type Offer = {
   bedrooms: number,
   maxAdults: number,
   goods: string[],
-  host: {
-    avatarUrl: string,
-    id: number,
-    isPro: boolean,
-    name: string,
-  },
-  city: {
-    location: {
-      latitude: number,
-      longitude: number,
-      zoom: number,
-    },
-    name: string,
-  },
+  host: Host,
+  city: City,
+  location: Location,
 };

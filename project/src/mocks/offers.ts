@@ -29,6 +29,11 @@ export const offers: Offer[] = [
       },
       name: 'Amsterdam',
     },
+    location: {
+      latitude: 52.3909553943508,
+      longitude: 4.85309666406198,
+      zoom: 8,
+    },
   },
   {
     id: 2,
@@ -36,7 +41,7 @@ export const offers: Offer[] = [
     isPremium: false,
     isFavorite: true,
     price: 80,
-    rating: 4.5,
+    rating: 3.5,
     title: 'Wood and stone place',
     type: 'Private room',
     images: ['img/room.jpg', 'img/apartment-02.jpg', 'img/apartment-03.jpg'],
@@ -58,6 +63,11 @@ export const offers: Offer[] = [
       },
       name: 'Amsterdam',
     },
+    location: {
+      latitude: 52.369553943508,
+      longitude: 4.85309666406198,
+      zoom: 8,
+    },
   },
   {
     id: 3,
@@ -65,7 +75,7 @@ export const offers: Offer[] = [
     isPremium: false,
     isFavorite: false,
     price: 132,
-    rating: 3.5,
+    rating: 2.6,
     title: 'Canal View Prinsengracht',
     type: 'Apartment',
     images: ['img/apartment-02.jpg', 'img/apartment-03.jpg'],
@@ -87,6 +97,11 @@ export const offers: Offer[] = [
       },
       name: 'Amsterdam',
     },
+    location: {
+      latitude: 52.3909553943508,
+      longitude: 4.929309666406198,
+      zoom: 8,
+    },
   },
   {
     id: 4,
@@ -94,7 +109,7 @@ export const offers: Offer[] = [
     isPremium: true,
     isFavorite: true,
     price: 180,
-    rating: 5.0,
+    rating: 3.1,
     title: 'Nice, cozy, warm big bed apartment',
     type: 'Private room',
     images: ['img/apartment-03.jpg', 'img/apartment-01.jpg', 'img/apartment-02.jpg', 'img/room.jpg'],
@@ -114,7 +129,12 @@ export const offers: Offer[] = [
         longitude: 4.895168,
         zoom: 10,
       },
-      name: 'Cologne',
+      name: 'Amsterdam',
+    },
+    location: {
+      latitude: 52.3809553943508,
+      longitude: 4.939309666406198,
+      zoom: 8,
     },
   },
 ];
