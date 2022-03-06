@@ -8,14 +8,16 @@ import NotFoundPage from '../not-found-page/not-found-page';
 import PrivateRoute from '../private-route/private-route';
 import { Offer } from '../../types/offer';
 import { City } from '../../types/city';
+import { Review } from '../../types/review';
 
 type AppProps = {
   placesCount: number;
   offers: Offer[];
   cities: City[];
+  reviews: Review[];
 }
 
-function App({ placesCount, offers, cities }: AppProps): JSX.Element {
+function App({ placesCount, offers, cities, reviews }: AppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
@@ -49,11 +51,11 @@ function App({ placesCount, offers, cities }: AppProps): JSX.Element {
         />
         <Route
           path={AppRoute.Room}
-          element={<OfferPage offers={offers} />}
+          element={<OfferPage offers={offers} reviews={reviews} />}
         >
           <Route
             path=':id'
-            element={<OfferPage offers={offers} />}
+            element={<OfferPage offers={offers} reviews={reviews} />}
           />
         </Route>
         <Route

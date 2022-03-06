@@ -26,6 +26,8 @@ function MainPage({ placesCount, offers, cities, pagePath }: MainPageProps): JSX
     setSelectedPoint(currentPlace?.location);
   };
 
+  const mapStyle = { width: '500px', margin: '0' };
+
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -127,6 +129,8 @@ function MainPage({ placesCount, offers, cities, pagePath }: MainPageProps): JSX
                 city={currentCity}
                 points={points}
                 selectedPoint={selectedPoint}
+                mapClassName="cities__map"
+                style={mapStyle}
               />
             </div>
           </div>
