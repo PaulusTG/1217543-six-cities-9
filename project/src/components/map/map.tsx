@@ -9,6 +9,11 @@ type MapProps = {
   city: City;
   points: Location[];
   selectedPoint: Location | undefined | null;
+  mapClassName: string;
+  style: {
+    width: string,
+    margin: string,
+  };
 };
 
 const defaultCustomIcon = new Icon({
@@ -23,7 +28,7 @@ const currentCustomIcon = new Icon({
   iconAnchor: [20, 40],
 });
 
-function Map({ city, points, selectedPoint }: MapProps): JSX.Element {
+function Map({ city, points, selectedPoint, mapClassName, style }: MapProps): JSX.Element {
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
 
@@ -50,9 +55,9 @@ function Map({ city, points, selectedPoint }: MapProps): JSX.Element {
 
   return (
     <section
-      className="cities__map map"
+      className={`${mapClassName} map`}
       ref={mapRef}
-      style={{ width: '500px' }}
+      style={style}
     >
     </section>);
 }

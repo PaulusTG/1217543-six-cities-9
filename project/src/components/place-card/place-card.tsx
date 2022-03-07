@@ -15,10 +15,24 @@ function PlaceCard({ offer, pagePath, onPlacesListHover }: PlaceCardProps): JSX.
 
   const [activeCard, setActiveCard] = useState<number | null>(null);
 
+  let articleClassName = '';
+  let divClassName = '';
+
   const imgSize = {
     width: pagePath === AppRoute.Favorites ? '150' : '260',
     height: pagePath === AppRoute.Favorites ? '110' : '200',
   };
+
+  if (pagePath === AppRoute.Favorites) {
+    articleClassName = 'favorites__card';
+    divClassName = 'favorites';
+  } else if (pagePath === AppRoute.Main) {
+    articleClassName = 'cities__place-card';
+    divClassName = 'cities';
+  } else {
+    articleClassName = 'near-places__card';
+    divClassName = 'near-places';
+  }
 
   const onCardMouseEnter = (evt: MouseEvent<HTMLElement>) => {
     evt.preventDefault();
@@ -29,11 +43,11 @@ function PlaceCard({ offer, pagePath, onPlacesListHover }: PlaceCardProps): JSX.
   return (
     <article
       key={id}
-      className={`${pagePath === AppRoute.Favorites ? 'favorites__card' : 'cities__place-card'} place-card`}
+      className={`${articleClassName} place-card`}
       onMouseEnter={onCardMouseEnter}
     >
       {isPremium ? <div className="place-card__mark"><span>Premium</span></div> : ''}
-      <div className={`${pagePath === AppRoute.Favorites ? 'favorites' : 'cities'}__image-wrapper place-card__image-wrapper`}>
+      <div className={`${divClassName}__image-wrapper place-card__image-wrapper`}>
         <Link to={AppRoute.Main}>
           <img className="place-card__image" src={previewImage} width={imgSize.width} height={imgSize.height} alt="Place_image" />
         </Link>
