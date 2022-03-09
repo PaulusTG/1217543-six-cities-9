@@ -31,6 +31,7 @@ function useMap(
 
       setMap(instance);
     }
+    map?.setView({ lat: latitude, lng: longitude }, zoom);
   }, [mapRef, map, latitude, longitude, zoom]);
 
   return map;

@@ -6,18 +6,15 @@ import FavoritesPage from '../favorites-page/favorites-page';
 import OfferPage from '../offer-page/offer-page';
 import NotFoundPage from '../not-found-page/not-found-page';
 import PrivateRoute from '../private-route/private-route';
-import { Offer } from '../../types/offer';
 import { City } from '../../types/city';
 import { Review } from '../../types/review';
 
 type AppProps = {
-  placesCount: number;
-  offers: Offer[];
   cities: City[];
   reviews: Review[];
 }
 
-function App({ placesCount, offers, cities, reviews }: AppProps): JSX.Element {
+function App({ cities, reviews }: AppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
@@ -25,8 +22,6 @@ function App({ placesCount, offers, cities, reviews }: AppProps): JSX.Element {
           path={AppRoute.Main}
           element={
             <MainPage
-              placesCount={placesCount}
-              offers={offers}
               cities={cities}
               pagePath={AppRoute.Main}
             />
@@ -43,7 +38,6 @@ function App({ placesCount, offers, cities, reviews }: AppProps): JSX.Element {
               authorizationStatus={AuthorizationStatus.Auth}
             >
               <FavoritesPage
-                offers={offers}
                 pagePath={AppRoute.Favorites}
               />
             </PrivateRoute>
@@ -51,11 +45,11 @@ function App({ placesCount, offers, cities, reviews }: AppProps): JSX.Element {
         />
         <Route
           path={AppRoute.Room}
-          element={<OfferPage offers={offers} reviews={reviews} />}
+          element={<OfferPage reviews={reviews} />}
         >
           <Route
             path=':id'
-            element={<OfferPage offers={offers} reviews={reviews} />}
+            element={<OfferPage reviews={reviews} />}
           />
         </Route>
         <Route

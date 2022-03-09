@@ -1,15 +1,15 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../consts';
-import { Offer } from '../../types/offer';
+import { useAppSelector } from '../../hooks';
 import Header from '../header/header';
 import PlacesList from '../places-list/places-list';
 
 type FavoritesPageProps = {
-  offers: Offer[];
   pagePath: string;
 }
 
-function FavoritesPage({ offers, pagePath }: FavoritesPageProps): JSX.Element {
+function FavoritesPage({ pagePath }: FavoritesPageProps): JSX.Element {
+  const { city, offers } = useAppSelector((state) => state);
   const favoritesOffers = offers.filter((offer) => offer.isFavorite);
 
   return (
@@ -25,7 +25,7 @@ function FavoritesPage({ offers, pagePath }: FavoritesPageProps): JSX.Element {
                 <div className="favorites__locations locations locations--current">
                   <div className="locations__item">
                     <Link className="locations__item-link" to={AppRoute.Main}>
-                      <span>Amsterdam</span>
+                      <span>{city}</span>
                     </Link>
                   </div>
                 </div>

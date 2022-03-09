@@ -1,5 +1,4 @@
 import { useParams } from 'react-router-dom';
-import { Offer } from '../../types/offer';
 import { Review } from '../../types/review';
 import Header from '../header/header';
 import ReviewForm from '../review-form/review-form';
@@ -7,14 +6,16 @@ import ReviewsList from '../reviews-list/reviews-list';
 import Map from '../map/map';
 import PlacesList from '../places-list/places-list';
 import { AppRoute } from '../../consts';
+import { useAppSelector } from '../../hooks';
 
 type OfferPageProps = {
-  offers: Offer[];
   reviews: Review[];
 };
 
-function OfferPage({ offers, reviews }: OfferPageProps): JSX.Element {
+function OfferPage({ reviews }: OfferPageProps): JSX.Element {
   const params = useParams();
+
+  const { offers } = useAppSelector((state) => state);
 
   const offer = offers.filter((elem) => elem.id === Number(params.id));
   const nearPlaces = offers.filter((elem) => elem.id !== Number(params.id));
@@ -25,7 +26,7 @@ function OfferPage({ offers, reviews }: OfferPageProps): JSX.Element {
     title, type, images, bedrooms, maxAdults,
     goods, host, description, city } = offer[0];
 
-  const mapStyle = { width: '1144px', margin: '0 200px 50px 200px' };
+  const mapStyle = { width: '1144px', margin: '0 auto 50px auto' };
 
   return (
     <div className="page">

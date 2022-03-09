@@ -125,15 +125,15 @@ export const offers: Offer[] = [
     },
     city: {
       location: {
-        latitude: 52.370216,
-        longitude: 4.895168,
+        latitude: 48.770216,
+        longitude: 2.375168,
         zoom: 10,
       },
-      name: 'Amsterdam',
+      name: 'Paris',
     },
     location: {
-      latitude: 52.3809553943508,
-      longitude: 4.939309666406198,
+      latitude: 48.8109553943508,
+      longitude: 2.359309666406198,
       zoom: 8,
     },
   },
