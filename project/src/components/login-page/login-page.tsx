@@ -1,7 +1,10 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../consts';
+import { useAppSelector } from '../../hooks';
 
 function LoginPage(): JSX.Element {
+  const { city } = useAppSelector((state) => state);
+
   return (
     <div className="page page--gray page--login">
       <header className="header">
@@ -35,7 +38,7 @@ function LoginPage(): JSX.Element {
           <section className="locations locations--login locations--current">
             <div className="locations__item">
               <Link className="locations__item-link" to={AppRoute.Main}>
-                <span>Amsterdam</span>
+                <span>{city}</span>
               </Link>
             </div>
           </section>

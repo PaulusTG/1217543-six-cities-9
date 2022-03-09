@@ -1,21 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
 import App from './components/app/app';
 import { cities } from './mocks/cities';
-import { offers } from './mocks/offers';
 import { reviews } from './mocks/reviews';
-
-const Settings = {
-  PLACES_COUNT: 312,
-};
+import { store } from './store';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App
-      placesCount={Settings.PLACES_COUNT}
-      offers={offers}
-      cities={cities}
-      reviews={reviews}
-    />
+    <Provider store={store}>
+      <App
+        cities={cities}
+        reviews={reviews}
+      />
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root'));
