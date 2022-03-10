@@ -5,3 +5,9 @@ export const changeCity = createAction('main/changeCity', (value) => ({
 }));
 
 export const fillOffers = createAction('main/fillOffers');
+
+export const sortOffers = createAction('main/sortOffers');
+
+export const changeSortType = createAction('main/changeSortType', (value) => ({
+  payload: value,
+}));
