@@ -6,15 +6,23 @@ import FavoritesPage from '../favorites-page/favorites-page';
 import OfferPage from '../offer-page/offer-page';
 import NotFoundPage from '../not-found-page/not-found-page';
 import PrivateRoute from '../private-route/private-route';
-import { City } from '../../types/city';
 import { Review } from '../../types/review';
+import { useAppSelector } from '../../hooks';
+import LoadingScreen from '../loading-screen/loading-screen';
 
 type AppProps = {
-  cities: City[];
   reviews: Review[];
 }
 
-function App({ cities, reviews }: AppProps): JSX.Element {
+function App({ reviews }: AppProps): JSX.Element {
+  const { isDataLoaded } = useAppSelector((state) => state);
+
+  if (!isDataLoaded) {
+    return (
+      <LoadingScreen />
+    );
+  }
+
   return (
     <BrowserRouter>
       <Routes>
@@ -22,7 +30,6 @@ function App({ cities, reviews }: AppProps): JSX.Element {
           path={AppRoute.Main}
           element={
             <MainPage
-              cities={cities}
               pagePath={AppRoute.Main}
             />
           }
