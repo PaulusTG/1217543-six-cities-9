@@ -1,7 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { changeCity, changeSortType, loadOffers, setError, setOffers, sortOffers } from './actions';
 import { filterByCity, sortByType } from '../utils';
-import { SortType } from '../consts';
+import { SortType } from '../constants';
 import { Offer } from '../types/offer';
 
 const DEFAULT_CITY = 'Paris';

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { CITIES } from '../../consts';
+import { CITIES } from '../../constants';
 import { useAppSelector } from '../../hooks';
 import { Location } from '../../types/location';
 import Header from '../header/header';

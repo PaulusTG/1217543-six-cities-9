@@ -1,5 +1,5 @@
 import request from 'axios';
-import { HTTP_CODE } from '../consts';
+import { HTTP_CODE } from '../constants';
 import { store } from '../store';
 import { setError } from '../store/actions';
 import { clearErrorAction } from '../store/api-actions';

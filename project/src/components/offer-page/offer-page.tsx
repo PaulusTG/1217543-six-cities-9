@@ -5,7 +5,7 @@ import ReviewForm from '../review-form/review-form';
 import ReviewsList from '../reviews-list/reviews-list';
 import Map from '../map/map';
 import PlacesList from '../places-list/places-list';
-import { AppRoute } from '../../consts';
+import { AppRoute } from '../../constants';
 import { useAppSelector } from '../../hooks';
 
 type OfferPageProps = {

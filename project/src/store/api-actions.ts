@@ -1,12 +1,15 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { api, store } from '.';
-import { APIRoute, TIMEOUT_SHOW_ERROR } from '../consts';
+import { APIRoute, TIMEOUT_SHOW_ERROR } from '../constants';
 import { errorHandle } from '../services/error-handle';
 import { Offer } from '../types/offer';
 import { loadOffers, setError } from './actions';
 
+const CLEAR_ERROR_ACTION = 'game/clearError';
+const FETCH_OFFER_ACTION = 'data/fetchOffers';
+
 export const clearErrorAction = createAsyncThunk(
-  'game/clearError',
+  CLEAR_ERROR_ACTION,
   () => {
     setTimeout(
       () => store.dispatch(setError('')),
@@ -16,7 +19,7 @@ export const clearErrorAction = createAsyncThunk(
 );
 
 export const fetchOfferAction = createAsyncThunk(
-  'data/fetchOffers',
+  FETCH_OFFER_ACTION,
   async () => {
     try {
       const { data } = await api.get<Offer[]>(APIRoute.Offers);

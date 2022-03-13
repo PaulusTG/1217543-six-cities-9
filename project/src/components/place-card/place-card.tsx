@@ -1,6 +1,6 @@
 import { MouseEvent, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { AppRoute } from '../../consts';
+import { AppRoute } from '../../constants';
 import { Offer } from '../../types/offer';
 
 type PlaceCardProps = {

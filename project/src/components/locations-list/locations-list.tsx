@@ -1,5 +1,5 @@
 import { MouseEvent } from 'react';
-import { CITIES } from '../../consts';
+import { CITIES } from '../../constants';
 import { useAppDispatch } from '../../hooks';
 import { changeCity, setOffers } from '../../store/actions';
 
