@@ -1,4 +1,4 @@
-import { SortType } from './consts';
+import { SortType } from './constants';
 import { Offer } from './types/offer';
 
 export const filterByCity = (offers: Offer[], city: string): Offer[] => offers.filter((offer) => offer.city.name === city);

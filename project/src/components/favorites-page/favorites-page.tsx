@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { AppRoute } from '../../consts';
+import { AppRoute } from '../../constants';
 import { useAppSelector } from '../../hooks';
 import Header from '../header/header';
 import PlacesList from '../places-list/places-list';

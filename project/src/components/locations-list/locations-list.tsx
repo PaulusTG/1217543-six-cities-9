@@ -1,7 +1,7 @@
 import { MouseEvent } from 'react';
+import { CITIES } from '../../constants';
 import { useAppDispatch } from '../../hooks';
-import { cities } from '../../mocks/cities';
-import { changeCity, fillOffers } from '../../store/actions';
+import { changeCity, setOffers } from '../../store/actions';
 
 type LocationsListProp = {
   currentCity: string;
@@ -13,12 +13,12 @@ function LocationsList({ currentCity }: LocationsListProp): JSX.Element {
   const onCityClick = (evt: MouseEvent<HTMLAnchorElement>) => {
     evt.preventDefault();
     dispatch(changeCity(evt.currentTarget.textContent));
-    dispatch(fillOffers());
+    dispatch(setOffers());
   };
 
   return (
     <ul className="locations__list tabs__list">
-      {cities.map((city) => (
+      {CITIES.map((city) => (
         <li key={`${city.name}`} className="locations__item">
           <a
             onClick={onCityClick}
