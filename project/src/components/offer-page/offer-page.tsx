@@ -5,7 +5,7 @@ import ReviewForm from '../review-form/review-form';
 import ReviewsList from '../reviews-list/reviews-list';
 import Map from '../map/map';
 import PlacesList from '../places-list/places-list';
-import { AppRoute } from '../../constants';
+import { AppRoute, AuthorizationStatus } from '../../constants';
 import { useAppSelector } from '../../hooks';
 
 type OfferPageProps = {
@@ -15,7 +15,7 @@ type OfferPageProps = {
 function OfferPage({ reviews }: OfferPageProps): JSX.Element {
   const params = useParams();
 
-  const { offers } = useAppSelector((state) => state);
+  const { offers, authorizationStatus } = useAppSelector((state) => state);
 
   const offer = offers.filter((elem) => elem.id === Number(params.id));
   const nearPlaces = offers.filter((elem) => elem.id !== Number(params.id));
@@ -117,7 +117,7 @@ function OfferPage({ reviews }: OfferPageProps): JSX.Element {
               <section className="property__reviews reviews">
                 <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
                 <ReviewsList reviews={reviews} />
-                <ReviewForm />
+                {authorizationStatus === AuthorizationStatus.Auth ? <ReviewForm /> : ''}
               </section>
             </div>
           </div>
