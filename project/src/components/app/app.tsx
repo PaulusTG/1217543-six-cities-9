@@ -1,5 +1,5 @@
 import { Route, Routes, BrowserRouter } from 'react-router-dom';
-import { AppRoute, AuthorizationStatus } from '../../constants';
+import { AppRoute } from '../../constants';
 import MainPage from '../main-page/main-page';
 import LoginPage from '../login-page/login-page';
 import FavoritesPage from '../favorites-page/favorites-page';
@@ -15,7 +15,7 @@ type AppProps = {
 }
 
 function App({ reviews }: AppProps): JSX.Element {
-  const { isDataLoaded } = useAppSelector((state) => state);
+  const { authorizationStatus, isDataLoaded } = useAppSelector((state) => state);
 
   if (!isDataLoaded) {
     return (
@@ -42,7 +42,7 @@ function App({ reviews }: AppProps): JSX.Element {
           path={AppRoute.Favorites}
           element={
             <PrivateRoute
-              authorizationStatus={AuthorizationStatus.Auth}
+              authorizationStatus={authorizationStatus}
             >
               <FavoritesPage
                 pagePath={AppRoute.Favorites}

@@ -1,4 +1,5 @@
 import { createAction } from '@reduxjs/toolkit';
+import { AuthorizationStatus } from '../constants';
 import { Offer } from '../types/offer';
 
 export const changeCity = createAction('main/changeCity', (value) => ({
@@ -16,3 +17,5 @@ export const changeSortType = createAction('main/changeSortType', (value) => ({
 }));
 
 export const setError = createAction<string>('/main/setError');
+
+export const requireAuthorization = createAction<AuthorizationStatus>('user/requireAuthorization');
