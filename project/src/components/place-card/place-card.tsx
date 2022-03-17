@@ -1,7 +1,11 @@
 import { MouseEvent, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { AppRoute } from '../../constants';
+import { store } from '../../store';
+import { fetchOfferAction, fetchOffersNearbyAction, fetchReviewsAction } from '../../store/api-actions';
 import { Offer } from '../../types/offer';
+
+const ROOM_LOAD_DELAY = 300;
 
 type PlaceCardProps = {
   offer: Offer;
@@ -13,6 +17,7 @@ function PlaceCard({ offer, pagePath, onPlacesListHover }: PlaceCardProps): JSX.
   const { id, previewImage, isPremium, isFavorite,
     price, rating, title, type } = offer;
 
+  const navigate = useNavigate();
   const [activeCard, setActiveCard] = useState<number | null>(null);
 
   let articleClassName = '';
@@ -38,6 +43,17 @@ function PlaceCard({ offer, pagePath, onPlacesListHover }: PlaceCardProps): JSX.
     evt.preventDefault();
     onPlacesListHover(id);
     setActiveCard(id);
+  };
+
+  const onClick = (evt: MouseEvent<HTMLAnchorElement>) => {
+    evt.preventDefault();
+    store.dispatch(fetchOfferAction(activeCard));
+    store.dispatch(fetchReviewsAction(activeCard));
+    store.dispatch(fetchOffersNearbyAction(activeCard));
+    setTimeout(
+      () => navigate(`${AppRoute.Room}/${activeCard}`),
+      ROOM_LOAD_DELAY,
+    );
   };
 
   return (
@@ -72,7 +88,7 @@ function PlaceCard({ offer, pagePath, onPlacesListHover }: PlaceCardProps): JSX.
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`${AppRoute.Room}/${activeCard}`}>{title}</Link>
+          <Link onClick={onClick} to={`${AppRoute.Room}/${activeCard}`}>{title}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>

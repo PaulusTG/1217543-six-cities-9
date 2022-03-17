@@ -7,3 +7,9 @@ export type Review = {
   rating: number,
   user: Host
 };
+
+export type NewReview = {
+  comment: string,
+  rating: number,
+  roomId: number | null,
+};

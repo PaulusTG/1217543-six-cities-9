@@ -1,4 +1,5 @@
 import { City } from './types/city';
+import { Offer } from './types/offer';
 
 const TIMEOUT_SHOW_ERROR = 2000;
 
@@ -6,7 +7,8 @@ enum AppRoute {
   Main = '/',
   Login = '/login',
   Favorites = '/favorites',
-  Room = '/offer'
+  Room = '/offer',
+  NotFound = '/notfound'
 }
 
 enum AuthorizationStatus {
@@ -36,6 +38,41 @@ enum HTTP_CODE {
   UNAUTHORIZED = 401,
   NOT_FOUND = 404,
 }
+
+const DEFAULT_OFFER: Offer = {
+  id: 0,
+  previewImage: '',
+  isPremium: false,
+  isFavorite: false,
+  price: 0,
+  rating: 0,
+  title: '',
+  type: '',
+  images: [],
+  description: '',
+  bedrooms: 0,
+  maxAdults: 0,
+  goods: [],
+  host: {
+    id: 0,
+    avatarUrl: '',
+    isPro: false,
+    name: '',
+  },
+  city: {
+    location: {
+      latitude: 48.85661,
+      longitude: 2.351499,
+      zoom: 13,
+    },
+    name: 'Paris',
+  },
+  location: {
+    latitude: 0,
+    longitude: 0,
+    zoom: 0,
+  },
+};
 
 const CITIES: City[] = [
   {
@@ -88,4 +125,4 @@ const CITIES: City[] = [
   },
 ];
 
-export { AppRoute, AuthorizationStatus, SortType, APIRoute, TIMEOUT_SHOW_ERROR, HTTP_CODE, CITIES };
+export { AppRoute, AuthorizationStatus, SortType, APIRoute, TIMEOUT_SHOW_ERROR, HTTP_CODE, CITIES, DEFAULT_OFFER };

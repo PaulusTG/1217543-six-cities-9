@@ -1,8 +1,9 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { changeCity, changeSortType, loadOffers, requireAuthorization, setError, setOffers, sortOffers } from './actions';
+import { changeCity, changeSortType, loadOffers, loadOffersNearby, loadReviews, loadRoom, requireAuthorization, setError, setOffers, setUserName, sortOffers } from './actions';
 import { filterByCity, sortByType } from '../utils';
-import { AuthorizationStatus, SortType } from '../constants';
+import { AuthorizationStatus, DEFAULT_OFFER, SortType } from '../constants';
 import { Offer } from '../types/offer';
+import { Review } from '../types/review';
 
 const DEFAULT_CITY = 'Paris';
 const DEFAULT_SORT_TYPE = SortType.Popular;
@@ -10,21 +11,29 @@ const DEFAULT_SORT_TYPE = SortType.Popular;
 type InitialState = {
   city: string,
   offers: Offer[],
+  offersNearby: Offer[],
   currentOffers: Offer[],
+  room: Offer,
+  reviews: Review[],
   sortType: SortType,
   isDataLoaded: boolean,
   error: string,
   authorizationStatus: AuthorizationStatus,
+  userName: string,
 }
 
 const initialState: InitialState = {
   city: DEFAULT_CITY,
   offers: [],
   currentOffers: [],
+  room: DEFAULT_OFFER,
+  reviews: [],
+  offersNearby: [],
   sortType: DEFAULT_SORT_TYPE,
   isDataLoaded: false,
   error: '',
   authorizationStatus: AuthorizationStatus.Unknown,
+  userName: '',
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -52,6 +61,18 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(requireAuthorization, (state, action) => {
       state.authorizationStatus = action.payload;
+    })
+    .addCase(setUserName, (state, action) => {
+      state.userName = action.payload;
+    })
+    .addCase(loadRoom, (state, action) => {
+      state.room = action.payload;
+    })
+    .addCase(loadOffersNearby, (state, action) => {
+      state.offersNearby = action.payload;
+    })
+    .addCase(loadReviews, (state, action) => {
+      state.reviews = action.payload;
     });
 });
 
