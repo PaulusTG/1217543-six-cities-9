@@ -7,7 +7,7 @@ function ReviewForm(): JSX.Element {
   const dispatch = useAppDispatch();
   const { room } = useAppSelector((state) => state);
 
-  const [formData, setFromData] = useState<{ rating: number, comment: string, roomId: number | null }>({
+  const [formData, setFromData] = useState<NewReview>({
     rating: 0,
     comment: '',
     roomId: room.id,
@@ -19,11 +19,7 @@ function ReviewForm(): JSX.Element {
     const { name, value } = evt.target;
     setFromData({ ...formData, [name]: name === 'rating' ? Number(value) : value });
 
-    if (formData.comment.length >= 50 && formData.rating !== 0) {
-      setIsButtonDisabled(false);
-    } else {
-      setIsButtonDisabled(true);
-    }
+    setIsButtonDisabled(!(formData.comment.length >= 50 && formData.rating !== 0));
   };
 
   const onSubmit = (newReview: NewReview) => {

@@ -13,7 +13,7 @@ function OfferPage(): JSX.Element {
 
   const { offers, room, reviews, offersNearby, authorizationStatus } = useAppSelector((state) => state);
 
-  if (offers.find((offer) => offer.id === Number(params.id)) === undefined) {
+  if (!offers.find((offer) => offer.id === Number(params.id))) {
     navigate(AppRoute.NotFound);
   }
 
