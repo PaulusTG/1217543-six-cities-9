@@ -1,5 +1,3 @@
-import { useParams } from 'react-router-dom';
-import { Review } from '../../types/review';
 import Header from '../header/header';
 import ReviewForm from '../review-form/review-form';
 import ReviewsList from '../reviews-list/reviews-list';
@@ -7,31 +5,30 @@ import Map from '../map/map';
 import PlacesList from '../places-list/places-list';
 import { AppRoute, AuthorizationStatus } from '../../constants';
 import { useAppSelector } from '../../hooks';
+import { useNavigate, useParams } from 'react-router-dom';
 
-type OfferPageProps = {
-  reviews: Review[];
-};
-
-function OfferPage({ reviews }: OfferPageProps): JSX.Element {
+function OfferPage(): JSX.Element {
   const params = useParams();
+  const navigate = useNavigate();
 
-  const { offers, authorizationStatus } = useAppSelector((state) => state);
+  const { offers, room, reviews, offersNearby, authorizationStatus } = useAppSelector((state) => state);
 
-  const offer = offers.filter((elem) => elem.id === Number(params.id));
-  const nearPlaces = offers.filter((elem) => elem.id !== Number(params.id));
-
-  const points = offers.map((elem) => elem.location);
+  if (!offers.find((offer) => offer.id === Number(params.id))) {
+    navigate(AppRoute.NotFound);
+  }
 
   const { isPremium, isFavorite, price, rating,
     title, type, images, bedrooms, maxAdults,
-    goods, host, description, city } = offer[0];
+    goods, host, description, city, location } = room;
+
+  const points = offersNearby.map((elem) => elem.location);
+  points.push(location);
 
   const mapStyle = { width: '1144px', margin: '0 auto 50px auto' };
 
   return (
     <div className="page">
       <Header />
-
       <main className="page__main page__main--property">
         <section className="property">
           <div className="property__gallery-container container">
@@ -124,7 +121,7 @@ function OfferPage({ reviews }: OfferPageProps): JSX.Element {
           < Map
             city={city}
             points={points}
-            selectedPoint={offer[0].location}
+            selectedPoint={room.location}
             mapClassName="property__map"
             style={mapStyle}
           />
@@ -133,7 +130,7 @@ function OfferPage({ reviews }: OfferPageProps): JSX.Element {
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              <PlacesList offers={nearPlaces} pagePath={AppRoute.Room} onPlacesListHover={() => null} />
+              <PlacesList offers={offersNearby} pagePath={AppRoute.Room} onPlacesListHover={() => null} />
             </div>
           </section>
         </div>

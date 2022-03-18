@@ -6,15 +6,10 @@ import FavoritesPage from '../favorites-page/favorites-page';
 import OfferPage from '../offer-page/offer-page';
 import NotFoundPage from '../not-found-page/not-found-page';
 import PrivateRoute from '../private-route/private-route';
-import { Review } from '../../types/review';
 import { useAppSelector } from '../../hooks';
 import LoadingScreen from '../loading-screen/loading-screen';
 
-type AppProps = {
-  reviews: Review[];
-}
-
-function App({ reviews }: AppProps): JSX.Element {
+function App(): JSX.Element {
   const { authorizationStatus, isDataLoaded } = useAppSelector((state) => state);
 
   if (!isDataLoaded) {
@@ -52,13 +47,17 @@ function App({ reviews }: AppProps): JSX.Element {
         />
         <Route
           path={AppRoute.Room}
-          element={<OfferPage reviews={reviews} />}
+          element={<OfferPage />}
         >
           <Route
             path=':id'
-            element={<OfferPage reviews={reviews} />}
+            element={<OfferPage />}
           />
         </Route>
+        <Route
+          path={AppRoute.NotFound}
+          element={<NotFoundPage />}
+        />
         <Route
           path='*'
           element={<NotFoundPage />}

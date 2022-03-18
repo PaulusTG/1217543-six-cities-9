@@ -1,14 +1,44 @@
-import { useState } from 'react';
+import { FormEvent, useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { addReviewAction } from '../../store/api-actions';
+import { NewReview } from '../../types/review';
 
 function ReviewForm(): JSX.Element {
-  const [formData, setFromData] = useState<{ rating: string, review: string }>({
-    rating: '',
-    review: '',
+  const dispatch = useAppDispatch();
+  const { room } = useAppSelector((state) => state);
+
+  const [formData, setFromData] = useState<NewReview>({
+    rating: 0,
+    comment: '',
+    roomId: room.id,
   });
+
+  const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(true);
 
   const onFieldChange = (evt: { target: { name: string; value: string; }; }) => {
     const { name, value } = evt.target;
-    setFromData({ ...formData, [name]: value });
+    setFromData({ ...formData, [name]: name === 'rating' ? Number(value) : value });
+
+    setIsButtonDisabled(!(formData.comment.length >= 50 && formData.rating !== 0));
+  };
+
+  const onSubmit = (newReview: NewReview) => {
+    dispatch(addReviewAction(newReview));
+  };
+
+  const handleClick = (evt: FormEvent<HTMLButtonElement>) => {
+    evt.preventDefault();
+
+    const { rating, comment, roomId } = formData;
+
+    if (rating !== 0 && comment !== '' && roomId !== null) {
+      onSubmit({
+        rating,
+        comment,
+        roomId,
+      });
+    }
+    setFromData({ rating: 0, comment: '', roomId: null });
   };
 
   return (
@@ -50,12 +80,19 @@ function ReviewForm(): JSX.Element {
           </svg>
         </label>
       </div>
-      <textarea onChange={onFieldChange} value={formData.review} className="reviews__textarea form__textarea" id="review" name="review" placeholder="Tell how was your stay, what you like and what can be improved"></textarea>
+      <textarea onChange={onFieldChange} value={formData.comment} className="reviews__textarea form__textarea" id="review" name="comment" placeholder="Tell how was your stay, what you like and what can be improved"></textarea>
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
           To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
         </p>
-        <button className="reviews__submit form__submit button" type="submit" disabled>Submit</button>
+        <button
+          onClick={handleClick}
+          className="reviews__submit form__submit button"
+          type="button"
+          disabled={isButtonDisabled}
+        >
+          Submit
+        </button>
       </div>
     </form>
   );
