@@ -1,15 +1,15 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { api, store } from '.';
-import { APIRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR } from '../constants';
+import { APIRoute, AuthorizationStatus } from '../constants';
 import { errorHandle } from '../services/error-handle';
 import { dropToken, saveToken } from '../services/token';
 import { AuthData } from '../types/auth-data';
 import { Offer } from '../types/offer';
 import { Review, NewReview } from '../types/review';
 import { UserData } from '../types/user-data';
-import { loadOffers, loadOffersNearby, loadReviews, loadRoom, requireAuthorization, setError, setUserName } from './actions';
+import { loadOffers, loadRoom, loadOffersNearby, loadReviews } from './data-process/data-process';
+import { requireAuthorization, setUserName } from './user-process/user-process';
 
-const CLEAR_ERROR_ACTION = 'game/clearError';
 const FETCH_OFFER_ACTION = 'data/fetchOffers';
 const FETCH_REVIEWS_ACTION = 'data/fetchReviews';
 const ADD_REVIEW_ACTION = 'data/addReview';
@@ -17,16 +17,6 @@ const FETCH_OFFERS_NEARBY_ACTION = 'data/fetchOffersNearby';
 const CHECK_AUTH = 'user/checkAuth';
 const USER_LOGIN = 'user/login';
 const USER_LOGOUT = 'user/logout';
-
-export const clearErrorAction = createAsyncThunk(
-  CLEAR_ERROR_ACTION,
-  () => {
-    setTimeout(
-      () => store.dispatch(setError('')),
-      TIMEOUT_SHOW_ERROR,
-    );
-  },
-);
 
 export const fetchOfferAction = createAsyncThunk(
   FETCH_OFFER_ACTION,

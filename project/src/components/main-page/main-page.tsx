@@ -8,12 +8,8 @@ import Map from '../map/map';
 import PlacesList from '../places-list/places-list';
 import PlacesSorting from '../places-sorting/places-sorting';
 
-type MainPageProps = {
-  pagePath: string;
-}
-
-function MainPage({ pagePath }: MainPageProps): JSX.Element {
-  const { city, currentOffers } = useAppSelector((state) => state);
+function MainPage(): JSX.Element {
+  const { city, currentOffers } = useAppSelector(({ DATA }) => DATA);
 
   const currentCity = CITIES.filter((cityItem) => cityItem.name === city)[0];
   const points = currentOffers.map((offer) => offer.location);
@@ -47,7 +43,6 @@ function MainPage({ pagePath }: MainPageProps): JSX.Element {
               <div className="cities__places-list places__list tabs__content">
                 < PlacesList
                   offers={currentOffers}
-                  pagePath={pagePath}
                   onPlacesListHover={onPlacesListHover}
                 />
               </div>

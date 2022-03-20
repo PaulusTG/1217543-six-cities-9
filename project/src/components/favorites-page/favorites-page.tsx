@@ -4,12 +4,8 @@ import { useAppSelector } from '../../hooks';
 import Header from '../header/header';
 import PlacesList from '../places-list/places-list';
 
-type FavoritesPageProps = {
-  pagePath: string;
-}
-
-function FavoritesPage({ pagePath }: FavoritesPageProps): JSX.Element {
-  const { city, offers } = useAppSelector((state) => state);
+function FavoritesPage(): JSX.Element {
+  const { city, offers } = useAppSelector(({ DATA }) => DATA);
   const favoritesOffers = offers.filter((offer) => offer.isFavorite);
 
   return (
@@ -32,7 +28,6 @@ function FavoritesPage({ pagePath }: FavoritesPageProps): JSX.Element {
                 <div className="favorites__places">
                   <PlacesList
                     offers={favoritesOffers}
-                    pagePath={pagePath}
                     onPlacesListHover={() => null}
                   />
                 </div>

@@ -5,16 +5,20 @@ import Map from '../map/map';
 import PlacesList from '../places-list/places-list';
 import { AppRoute, AuthorizationStatus } from '../../constants';
 import { useAppSelector } from '../../hooks';
-import { useNavigate, useParams } from 'react-router-dom';
+import { dispatchOfferData } from '../../utils';
+import { useParams, useNavigate } from 'react-router-dom';
 
 function OfferPage(): JSX.Element {
   const params = useParams();
   const navigate = useNavigate();
 
-  const { offers, room, reviews, offersNearby, authorizationStatus } = useAppSelector((state) => state);
+  const { offers, room, reviews, offersNearby } = useAppSelector(({ DATA }) => DATA);
+  const { authorizationStatus } = useAppSelector(({ USER }) => USER);
 
   if (!offers.find((offer) => offer.id === Number(params.id))) {
     navigate(AppRoute.NotFound);
+  } else if (room.id !== Number(params.id)) {
+    dispatchOfferData(Number(params.id));
   }
 
   const { isPremium, isFavorite, price, rating,
@@ -130,7 +134,7 @@ function OfferPage(): JSX.Element {
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              <PlacesList offers={offersNearby} pagePath={AppRoute.Room} onPlacesListHover={() => null} />
+              <PlacesList offers={offersNearby} onPlacesListHover={() => null} />
             </div>
           </section>
         </div>

@@ -6,7 +6,7 @@ import { loginAction } from '../../store/api-actions';
 import { AuthData } from '../../types/auth-data';
 
 function LoginPage(): JSX.Element {
-  const { city } = useAppSelector((state) => state);
+  const { city } = useAppSelector(({ DATA }) => DATA);
 
   const emailRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);

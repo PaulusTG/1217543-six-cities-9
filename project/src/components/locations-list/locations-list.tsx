@@ -1,7 +1,7 @@
 import { MouseEvent } from 'react';
 import { CITIES } from '../../constants';
 import { useAppDispatch } from '../../hooks';
-import { changeCity, setOffers } from '../../store/actions';
+import { changeCity, setOffers } from '../../store/data-process/data-process';
 
 type LocationsListProp = {
   currentCity: string;

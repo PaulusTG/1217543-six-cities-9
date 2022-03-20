@@ -4,6 +4,9 @@ import useMap from '../../hooks/useMap';
 import { City } from '../../types/city';
 import { Location } from '../../types/location';
 import 'leaflet/dist/leaflet.css';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { addLayerToMap } from '../../utils';
+import { setIsNeedMapLayerUpdate } from '../../store/data-process/data-process';
 
 type MapProps = {
   city: City;
@@ -31,9 +34,16 @@ const currentCustomIcon = new Icon({
 function Map({ city, points, selectedPoint, mapClassName, style }: MapProps): JSX.Element {
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
+  const dispatch = useAppDispatch();
+  const { isNeedMapLayerUpdate } = useAppSelector(({ DATA }) => DATA);
 
   useEffect(() => {
     if (map) {
+      if (isNeedMapLayerUpdate) {
+        map.eachLayer((eachLayer) => eachLayer.remove());
+        addLayerToMap(map);
+      }
+
       points.forEach((point) => {
         const marker = new Marker({
           lat: point.latitude,
@@ -50,8 +60,10 @@ function Map({ city, points, selectedPoint, mapClassName, style }: MapProps): JS
           )
           .addTo(map);
       });
+      dispatch(setIsNeedMapLayerUpdate(false));
     }
-  }, [map, points, selectedPoint]);
+  }, [map, points, selectedPoint, isNeedMapLayerUpdate, dispatch]);
+
 
   return (
     <section

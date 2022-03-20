@@ -1,19 +1,18 @@
 import { MouseEvent, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AppRoute } from '../../constants';
-import { store } from '../../store';
-import { fetchOfferAction, fetchOffersNearbyAction, fetchReviewsAction } from '../../store/api-actions';
 import { Offer } from '../../types/offer';
 
 const ROOM_LOAD_DELAY = 300;
 
 type PlaceCardProps = {
   offer: Offer;
-  pagePath: string;
   onPlacesListHover: (placeCardId: number) => void;
 };
 
-function PlaceCard({ offer, pagePath, onPlacesListHover }: PlaceCardProps): JSX.Element {
+function PlaceCard({ offer, onPlacesListHover }: PlaceCardProps): JSX.Element {
+  const pagePath = useLocation().pathname;
+
   const { id, previewImage, isPremium, isFavorite,
     price, rating, title, type } = offer;
 
@@ -47,11 +46,10 @@ function PlaceCard({ offer, pagePath, onPlacesListHover }: PlaceCardProps): JSX.
 
   const onClick = (evt: MouseEvent<HTMLAnchorElement>) => {
     evt.preventDefault();
-    store.dispatch(fetchOfferAction(activeCard));
-    store.dispatch(fetchReviewsAction(activeCard));
-    store.dispatch(fetchOffersNearbyAction(activeCard));
     setTimeout(
-      () => navigate(`${AppRoute.Room}/${activeCard}`),
+      () => {
+        navigate(`${AppRoute.Room}/${activeCard}`);
+      },
       ROOM_LOAD_DELAY,
     );
   };
