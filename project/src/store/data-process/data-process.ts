@@ -11,6 +11,7 @@ const initialState: DataProcess = {
   offers: [],
   currentOffers: [],
   offersNearby: [],
+  favorites: [],
   room: DEFAULT_OFFER,
   reviews: [],
   sortType: DEFAULT_SORT_TYPE,
@@ -30,6 +31,9 @@ export const dataProcess = createSlice({
     setOffers: (state) => {
       state.currentOffers = filterByCity(state.offers, state.city);
     },
+    sortOffers: (state) => {
+      state.currentOffers = sortByType(filterByCity(state.offers, state.city), state.sortType);
+    },
     loadRoom: (state, action) => {
       state.room = action.payload;
     },
@@ -39,6 +43,20 @@ export const dataProcess = createSlice({
     },
     loadReviews: (state, action) => {
       state.reviews = action.payload;
+    },
+    loadFavorites: (state, action) => {
+      state.favorites = action.payload;
+    },
+    setFavorites: (state, action) => {
+      if (!action.payload.isFavorite) {
+        state.favorites = state.favorites.filter((item) => item.id !== action.payload.id);
+      }
+      const index = state.offers.findIndex((item) => item.id === action.payload.id);
+      state.offers = [
+        ...state.offers.slice(0, index),
+        action.payload,
+        ...state.offers.slice(index + 1),
+      ];
     },
     setIsNeedMapLayerUpdate: (state, action) => {
       state.isNeedMapLayerUpdate = action.payload;
@@ -51,10 +69,9 @@ export const dataProcess = createSlice({
     changeSortType: (state, action) => {
       state.sortType = action.payload;
     },
-    sortOffers: (state) => {
-      state.currentOffers = sortByType(filterByCity(state.offers, state.city), state.sortType);
-    },
   },
 });
 
-export const { loadOffers, loadRoom, loadOffersNearby, loadReviews, setOffers, setIsNeedMapLayerUpdate, changeCity, changeSortType, sortOffers } = dataProcess.actions;
+export const { loadOffers, loadRoom, loadOffersNearby, loadReviews,
+  loadFavorites, setOffers, setIsNeedMapLayerUpdate, changeCity,
+  changeSortType, sortOffers, setFavorites } = dataProcess.actions;

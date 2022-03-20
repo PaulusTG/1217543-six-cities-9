@@ -7,13 +7,15 @@ import { AuthData } from '../types/auth-data';
 import { Offer } from '../types/offer';
 import { Review, NewReview } from '../types/review';
 import { UserData } from '../types/user-data';
-import { loadOffers, loadRoom, loadOffersNearby, loadReviews } from './data-process/data-process';
+import { loadOffers, loadRoom, loadOffersNearby, loadReviews, loadFavorites, setFavorites } from './data-process/data-process';
 import { requireAuthorization, setUserName } from './user-process/user-process';
 
 const FETCH_OFFER_ACTION = 'data/fetchOffers';
 const FETCH_REVIEWS_ACTION = 'data/fetchReviews';
 const ADD_REVIEW_ACTION = 'data/addReview';
 const FETCH_OFFERS_NEARBY_ACTION = 'data/fetchOffersNearby';
+const FETCH_FAVORITES_ACTION = 'data/loadFavorites';
+const SET_FAVORITES_ACTION = 'data/setFavorites';
 const CHECK_AUTH = 'user/checkAuth';
 const USER_LOGIN = 'user/login';
 const USER_LOGOUT = 'user/logout';
@@ -71,12 +73,37 @@ export const addReviewAction = createAsyncThunk(
   },
 );
 
+export const setFavoritesAction = createAsyncThunk(
+  SET_FAVORITES_ACTION,
+  async ({ id, isFavorite }: Offer) => {
+    try {
+      const { data } = await api.post<Offer>(`${APIRoute.Favorite}/${id}/${Number(isFavorite)}`);
+      store.dispatch(setFavorites(data));
+    } catch (error) {
+      errorHandle(error);
+    }
+  },
+);
+
+export const fetchFavoritesAction = createAsyncThunk(
+  FETCH_FAVORITES_ACTION,
+  async () => {
+    try {
+      const { data } = await api.get<Offer[]>(APIRoute.Favorite);
+      store.dispatch(loadFavorites(data));
+    } catch (error) {
+      errorHandle(error);
+    }
+  },
+);
+
 export const checkAuthAction = createAsyncThunk(
   CHECK_AUTH,
   async () => {
     try {
-      await api.get(APIRoute.Login);
+      const { data: { email } } = await api.get<UserData>(APIRoute.Login);
       store.dispatch(requireAuthorization(AuthorizationStatus.Auth));
+      store.dispatch(setUserName(email));
     } catch (error) {
       errorHandle(error);
       store.dispatch(requireAuthorization(AuthorizationStatus.NoAuth));

@@ -4,13 +4,20 @@ import ReviewsList from '../reviews-list/reviews-list';
 import Map from '../map/map';
 import PlacesList from '../places-list/places-list';
 import { AppRoute, AuthorizationStatus } from '../../constants';
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { dispatchOfferData } from '../../utils';
 import { useParams, useNavigate } from 'react-router-dom';
+import { MouseEvent } from 'react';
+import { store } from '../../store';
+import { setFavoritesAction } from '../../store/api-actions';
+import { loadRoom, setOffers } from '../../store/data-process/data-process';
+
+const ROOM_LOAD_DELAY = 300;
 
 function OfferPage(): JSX.Element {
   const params = useParams();
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const { offers, room, reviews, offersNearby } = useAppSelector(({ DATA }) => DATA);
   const { authorizationStatus } = useAppSelector(({ USER }) => USER);
@@ -21,7 +28,7 @@ function OfferPage(): JSX.Element {
     dispatchOfferData(Number(params.id));
   }
 
-  const { isPremium, isFavorite, price, rating,
+  const { id, isPremium, isFavorite, price, rating,
     title, type, images, bedrooms, maxAdults,
     goods, host, description, city, location } = room;
 
@@ -29,6 +36,21 @@ function OfferPage(): JSX.Element {
   points.push(location);
 
   const mapStyle = { width: '1144px', margin: '0 auto 50px auto' };
+
+  const onBookmarkClick = (evt: MouseEvent<HTMLButtonElement>) => {
+    evt.preventDefault();
+    if (authorizationStatus !== AuthorizationStatus.Auth) {
+      navigate(AppRoute.Login);
+    }
+    store.dispatch(setFavoritesAction({ ...room, id, isFavorite: !isFavorite }));
+    setTimeout(
+      () => {
+        dispatch(setOffers());
+        dispatch(loadRoom({ ...room, isFavorite: !isFavorite }));
+      },
+      ROOM_LOAD_DELAY,
+    );
+  };
 
   return (
     <div className="page">
@@ -54,7 +76,11 @@ function OfferPage(): JSX.Element {
                 <h1 className="property__name">
                   {title}
                 </h1>
-                <button className={`property__bookmark-button button ${isFavorite ? 'property__bookmark-button--active' : ''}`} type="button">
+                <button
+                  onClick={onBookmarkClick}
+                  className={`property__bookmark-button button ${isFavorite ? 'property__bookmark-button--active' : ''}`}
+                  type="button"
+                >
                   <svg className="property__bookmark-icon" width="31" height="33">
                     <use xlinkHref="#icon-bookmark"></use>
                   </svg>

@@ -13,6 +13,7 @@ export type DataProcess = {
   offers: Offer[],
   currentOffers: Offer[],
   offersNearby: Offer[],
+  favorites: Offer[],
   room: Offer,
   reviews: Review[],
   sortType: SortType,

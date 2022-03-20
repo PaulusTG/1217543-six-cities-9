@@ -1,11 +1,27 @@
-import { Link } from 'react-router-dom';
+import { MouseEvent } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../constants';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { logoutAction } from '../../store/api-actions';
+import { store } from '../../store';
+import { fetchFavoritesAction, logoutAction } from '../../store/api-actions';
+
+const ROOM_LOAD_DELAY = 300;
 
 function Header(): JSX.Element {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const { authorizationStatus, userName } = useAppSelector(({ USER }) => USER);
+
+  const onClick = (evt: MouseEvent<HTMLAnchorElement>) => {
+    evt.preventDefault();
+    store.dispatch(fetchFavoritesAction());
+    setTimeout(
+      () => {
+        navigate(AppRoute.Favorites);
+      },
+      ROOM_LOAD_DELAY,
+    );
+  };
 
   return (
     <header className="header">
@@ -29,7 +45,7 @@ function Header(): JSX.Element {
                 </li> :
                 <>
                   <li className="header__nav-item user">
-                    <Link className="header__nav-link header__nav-link--profile" to={AppRoute.Favorites}>
+                    <Link onClick={onClick} className="header__nav-link header__nav-link--profile" to={AppRoute.Favorites}>
                       <div className="header__avatar-wrapper user__avatar-wrapper">
                       </div>
                       <span className="header__user-name user__name">{userName}</span>
