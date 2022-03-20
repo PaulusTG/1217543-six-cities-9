@@ -1,7 +1,8 @@
 import { City } from './types/city';
 import { Offer } from './types/offer';
 
-const TIMEOUT_SHOW_ERROR = 2000;
+const LAYER_URL = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png';
+const LAYER_ATTRIBUTION = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>';
 
 enum AppRoute {
   Main = '/',
@@ -37,6 +38,11 @@ enum HTTP_CODE {
   BAD_REQUEST = 400,
   UNAUTHORIZED = 401,
   NOT_FOUND = 404,
+}
+
+enum NameSpace {
+  data = 'DATA',
+  user = 'USER',
 }
 
 const DEFAULT_OFFER: Offer = {
@@ -125,4 +131,4 @@ const CITIES: City[] = [
   },
 ];
 
-export { AppRoute, AuthorizationStatus, SortType, APIRoute, TIMEOUT_SHOW_ERROR, HTTP_CODE, CITIES, DEFAULT_OFFER };
+export { AppRoute, AuthorizationStatus, SortType, APIRoute, HTTP_CODE, CITIES, DEFAULT_OFFER, NameSpace, LAYER_URL, LAYER_ATTRIBUTION };

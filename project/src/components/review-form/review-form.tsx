@@ -5,7 +5,7 @@ import { NewReview } from '../../types/review';
 
 function ReviewForm(): JSX.Element {
   const dispatch = useAppDispatch();
-  const { room } = useAppSelector((state) => state);
+  const { room } = useAppSelector(({ DATA }) => DATA);
 
   const [formData, setFromData] = useState<NewReview>({
     rating: 0,

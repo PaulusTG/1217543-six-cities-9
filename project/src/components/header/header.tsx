@@ -5,7 +5,7 @@ import { logoutAction } from '../../store/api-actions';
 
 function Header(): JSX.Element {
   const dispatch = useAppDispatch();
-  const { authorizationStatus, userName } = useAppSelector((state) => state);
+  const { authorizationStatus, userName } = useAppSelector(({ USER }) => USER);
 
   return (
     <header className="header">

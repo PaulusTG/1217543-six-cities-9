@@ -3,14 +3,13 @@ import PlaceCard from '../place-card/place-card';
 
 type PlacesListProps = {
   offers: Offer[];
-  pagePath: string;
   onPlacesListHover: (placeCardId: number) => void;
 };
 
-function PlacesList({ offers, pagePath, onPlacesListHover }: PlacesListProps): JSX.Element {
+function PlacesList({ offers, onPlacesListHover }: PlacesListProps): JSX.Element {
   return (
     <>
-      {offers.map((offer) => <PlaceCard key={offer.id} offer={offer} pagePath={pagePath} onPlacesListHover={onPlacesListHover} />)}
+      {offers.map((offer) => <PlaceCard key={offer.id} offer={offer} onPlacesListHover={onPlacesListHover} />)}
     </>
   );
 }
