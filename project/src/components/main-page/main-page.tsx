@@ -4,6 +4,7 @@ import { useAppSelector } from '../../hooks';
 import { Location } from '../../types/location';
 import Header from '../header/header';
 import LocationsList from '../locations-list/locations-list';
+import MainEmpty from '../main-empty/main-empty';
 import Map from '../map/map';
 import PlacesList from '../places-list/places-list';
 import PlacesSorting from '../places-sorting/places-sorting';
@@ -35,18 +36,20 @@ function MainPage(): JSX.Element {
           </section>
         </div>
         <div className="cities">
-          <div className="cities__places-container container">
-            <section className="cities__places places">
-              <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{currentOffers.length} places to stay in {city}</b>
-              <PlacesSorting />
-              <div className="cities__places-list places__list tabs__content">
-                < PlacesList
-                  offers={currentOffers}
-                  onPlacesListHover={onPlacesListHover}
-                />
-              </div>
-            </section>
+          <div className={`cities__places-container ${currentOffers.length === 0 ? 'cities__places-container--empty' : ''} container`}>
+            {currentOffers.length === 0 ?
+              <MainEmpty /> :
+              <section className="cities__places places">
+                <h2 className="visually-hidden">Places</h2>
+                <b className="places__found">{currentOffers.length} places to stay in {city}</b>
+                <PlacesSorting />
+                <div className="cities__places-list places__list tabs__content">
+                  < PlacesList
+                    offers={currentOffers}
+                    onPlacesListHover={onPlacesListHover}
+                  />
+                </div>
+              </section>}
             <div className="cities__right-section">
               < Map
                 city={currentCity}
