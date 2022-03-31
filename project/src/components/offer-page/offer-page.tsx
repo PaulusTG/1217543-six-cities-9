@@ -5,7 +5,7 @@ import Map from '../map/map';
 import PlacesList from '../places-list/places-list';
 import { AppRoute, AuthorizationStatus } from '../../constants';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { dispatchOfferData } from '../../utils';
+import { dispatchOfferData } from '../../utils/dispatch-offer-data';
 import { useParams, useNavigate } from 'react-router-dom';
 import { MouseEvent } from 'react';
 import { store } from '../../store';

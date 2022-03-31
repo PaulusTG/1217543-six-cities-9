@@ -26,7 +26,12 @@ function ReviewsItem({ review }: ReviewsItemProps): JSX.Element {
         <p className="reviews__text">
           {comment}
         </p>
-        <time className="reviews__time" dateTime={date}>{date}</time>
+        <time className="reviews__time" dateTime={date}>
+          {new Intl.DateTimeFormat('ru-RU', {
+            month: 'long',
+            year: 'numeric',
+          }).format(new Date(date))}
+        </time>
       </div>
     </li>
   );

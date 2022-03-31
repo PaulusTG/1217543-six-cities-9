@@ -1,7 +1,7 @@
 import { Map } from 'leaflet';
 import { MutableRefObject, useEffect, useState } from 'react';
 import { City } from '../types/city';
-import { addLayerToMap } from '../utils';
+import { addLayerToMap } from '../utils/utils';
 
 function useMap(
   mapRef: MutableRefObject<HTMLElement | null>,

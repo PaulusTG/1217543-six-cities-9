@@ -1,8 +1,6 @@
 import { TileLayer, Map } from 'leaflet';
-import { LAYER_ATTRIBUTION, LAYER_URL, SortType } from './constants';
-import { store } from './store';
-import { fetchOfferAction, fetchReviewsAction, fetchOffersNearbyAction } from './store/api-actions';
-import { Offer } from './types/offer';
+import { LAYER_ATTRIBUTION, LAYER_URL, SortType } from '../constants';
+import { Offer } from '../types/offer';
 
 export const filterByCity = (offers: Offer[], city: string): Offer[] => offers.filter((offer) => offer.city.name === city);
 
@@ -19,12 +17,6 @@ export const sortByType = (offers: Offer[], currentSortType: string): Offer[] =>
     default:
       return offers;
   }
-};
-
-export const dispatchOfferData = (id: number | null) => {
-  store.dispatch(fetchOfferAction(id));
-  store.dispatch(fetchReviewsAction(id));
-  store.dispatch(fetchOffersNearbyAction(id));
 };
 
 export const addLayerToMap = (map: Map) => {
