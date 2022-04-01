@@ -1,4 +1,4 @@
-import { Route, Routes, BrowserRouter } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { AppRoute } from '../../constants';
 import MainPage from '../main-page/main-page';
 import LoginPage from '../login-page/login-page';
@@ -20,47 +20,45 @@ function App(): JSX.Element {
   }
 
   return (
-    <BrowserRouter>
-      <Routes>
+    <Routes>
+      <Route
+        path={AppRoute.Main}
+        element={
+          <MainPage />
+        }
+      />
+      <Route
+        path={AppRoute.Login}
+        element={<LoginPage />}
+      />
+      <Route
+        path={AppRoute.Favorites}
+        element={
+          <PrivateRoute
+            authorizationStatus={authorizationStatus}
+          >
+            <FavoritesPage />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path={AppRoute.Room}
+        element={<OfferPage />}
+      >
         <Route
-          path={AppRoute.Main}
-          element={
-            <MainPage />
-          }
-        />
-        <Route
-          path={AppRoute.Login}
-          element={<LoginPage />}
-        />
-        <Route
-          path={AppRoute.Favorites}
-          element={
-            <PrivateRoute
-              authorizationStatus={authorizationStatus}
-            >
-              <FavoritesPage />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path={AppRoute.Room}
+          path=':id'
           element={<OfferPage />}
-        >
-          <Route
-            path=':id'
-            element={<OfferPage />}
-          />
-        </Route>
-        <Route
-          path={AppRoute.NotFound}
-          element={<NotFoundPage />}
         />
-        <Route
-          path='*'
-          element={<NotFoundPage />}
-        />
-      </Routes>
-    </BrowserRouter>
+      </Route>
+      <Route
+        path={AppRoute.NotFound}
+        element={<NotFoundPage />}
+      />
+      <Route
+        path='*'
+        element={<NotFoundPage />}
+      />
+    </Routes>
   );
 }
 

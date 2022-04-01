@@ -1,12 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { DEFAULT_OFFER, NameSpace, SortType } from '../../constants';
 import { DataProcess } from '../../types/state';
-import { filterByCity, sortByType } from '../../utils';
+import { filterByCity, sortByType } from '../../utils/utils';
 
-const DEFAULT_CITY = 'Paris';
+export const DEFAULT_CITY = 'Paris';
 const DEFAULT_SORT_TYPE = SortType.Popular;
 
-const initialState: DataProcess = {
+export const initialState: DataProcess = {
   city: DEFAULT_CITY,
   offers: [],
   currentOffers: [],

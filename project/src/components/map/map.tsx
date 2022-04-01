@@ -5,7 +5,7 @@ import { City } from '../../types/city';
 import { Location } from '../../types/location';
 import 'leaflet/dist/leaflet.css';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { addLayerToMap } from '../../utils';
+import { addLayerToMap } from '../../utils/utils';
 import { setIsNeedMapLayerUpdate } from '../../store/data-process/data-process';
 
 type MapProps = {

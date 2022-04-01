@@ -1,11 +1,20 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../constants';
-import Header from '../header/header';
 
 function NotFoundPage(): JSX.Element {
   return (
     <div className="page">
-      <Header />
+      <header>
+        <div className="container">
+          <div className="header__wrapper">
+            <div className="header__left">
+              <Link className="header__logo-link header__logo-link--active" to={AppRoute.Main} >
+                <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41" />
+              </Link>
+            </div>
+          </div>
+        </div>
+      </header>
 
       <main className="page__main page__main--index page__main--index-empty">
         <div className="cities">
