@@ -24,11 +24,11 @@ function PlacesSorting(): JSX.Element {
           <use xlinkHref="#icon-arrow-select"></use>
         </svg>
       </span>
-      <ul className={`places__options places__options--custom ${isOptionsOpened ? 'places__options--opened' : ''}`}>
-        <li onClick={onSortTypeClick} className={`places__option ${sortType === SortType.Popular ? 'places__option--active' : ''}`} tabIndex={0}>{SortType.Popular}</li>
-        <li onClick={onSortTypeClick} className={`places__option ${sortType === SortType.LowToHigh ? 'places__option--active' : ''}`} tabIndex={0}>{SortType.LowToHigh}</li>
-        <li onClick={onSortTypeClick} className={`places__option ${sortType === SortType.HighToLow ? 'places__option--active' : ''}`} tabIndex={0}>{SortType.HighToLow}</li>
-        <li onClick={onSortTypeClick} className={`places__option ${sortType === SortType.TopRated ? 'places__option--active' : ''}`} tabIndex={0}>{SortType.TopRated}</li>
+      <ul className={`places__options places__options--custom ${isOptionsOpened ? 'places__options--opened' : ''}`} data-testid='places__options'>
+        <li onClick={onSortTypeClick} className={`places__option ${sortType === SortType.Popular ? 'places__option--active' : ''}`} data-testid='places__option' tabIndex={0}>{SortType.Popular}</li>
+        <li onClick={onSortTypeClick} className={`places__option ${sortType === SortType.LowToHigh ? 'places__option--active' : ''}`} data-testid='places__option' tabIndex={0}>{SortType.LowToHigh}</li>
+        <li onClick={onSortTypeClick} className={`places__option ${sortType === SortType.HighToLow ? 'places__option--active' : ''}`} data-testid='places__option' tabIndex={0}>{SortType.HighToLow}</li>
+        <li onClick={onSortTypeClick} className={`places__option ${sortType === SortType.TopRated ? 'places__option--active' : ''}`} data-testid='places__option' tabIndex={0}>{SortType.TopRated}</li>
       </ul>
     </form>
   );

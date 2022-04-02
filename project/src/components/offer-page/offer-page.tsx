@@ -8,7 +8,6 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { dispatchOfferData } from '../../utils/dispatch-offer-data';
 import { useParams, useNavigate } from 'react-router-dom';
 import { MouseEvent } from 'react';
-import { store } from '../../store';
 import { setFavoritesAction } from '../../store/api-actions';
 import { loadRoom, setOffers } from '../../store/data-process/data-process';
 
@@ -42,7 +41,7 @@ function OfferPage(): JSX.Element {
     if (authorizationStatus !== AuthorizationStatus.Auth) {
       navigate(AppRoute.Login);
     }
-    store.dispatch(setFavoritesAction({ ...room, id, isFavorite: !isFavorite }));
+    dispatch(setFavoritesAction({ ...room, id, isFavorite: !isFavorite }));
     setTimeout(
       () => {
         dispatch(setOffers());
@@ -80,6 +79,7 @@ function OfferPage(): JSX.Element {
                   onClick={onBookmarkClick}
                   className={`property__bookmark-button button ${isFavorite ? 'property__bookmark-button--active' : ''}`}
                   type="button"
+                  data-testid='bookmark-button'
                 >
                   <svg className="property__bookmark-icon" width="31" height="33">
                     <use xlinkHref="#icon-bookmark"></use>
@@ -157,7 +157,7 @@ function OfferPage(): JSX.Element {
           />
         </section>
         <div className="container">
-          <section className="near-places places">
+          <section className="near-places places" data-testid='near-places'>
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
               <PlacesList offers={offersNearby} onPlacesListHover={() => null} />

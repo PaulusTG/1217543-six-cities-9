@@ -70,6 +70,7 @@ function Map({ city, points, selectedPoint, mapClassName, style }: MapProps): JS
       className={`${mapClassName} map`}
       ref={mapRef}
       style={style}
+      data-testid="map"
     >
     </section>);
 }

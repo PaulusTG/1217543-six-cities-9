@@ -40,7 +40,7 @@ export const makeFakeOffer = (): Offer => ({
 
 export const makeFakeReview = (): Review => ({
   comment: datatype.string(),
-  date: datatype.string(),
+  date: new Date().toString(),
   id: datatype.number(),
   rating: datatype.float(),
   user: {

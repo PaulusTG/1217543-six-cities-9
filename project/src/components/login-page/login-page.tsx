@@ -81,6 +81,7 @@ function LoginPage(): JSX.Element {
                 onClick={handleClick}
                 className="login__submit form__submit button"
                 type="button"
+                data-testid='login__submit'
               >
                 Sign in
               </button>

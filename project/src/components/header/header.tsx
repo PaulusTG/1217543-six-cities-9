@@ -2,7 +2,6 @@ import { MouseEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../constants';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { store } from '../../store';
 import { fetchFavoritesAction, logoutAction } from '../../store/api-actions';
 
 const ROOM_LOAD_DELAY = 300;
@@ -14,7 +13,7 @@ function Header(): JSX.Element {
 
   const onClick = (evt: MouseEvent<HTMLAnchorElement>) => {
     evt.preventDefault();
-    store.dispatch(fetchFavoritesAction());
+    dispatch(fetchFavoritesAction());
     setTimeout(
       () => {
         navigate(AppRoute.Favorites);
@@ -45,7 +44,7 @@ function Header(): JSX.Element {
                 </li> :
                 <>
                   <li className="header__nav-item user">
-                    <Link onClick={onClick} className="header__nav-link header__nav-link--profile" to={AppRoute.Favorites}>
+                    <Link onClick={onClick} className="header__nav-link header__nav-link--profile" to={AppRoute.Favorites} data-testid='header__user-name'>
                       <div className="header__avatar-wrapper user__avatar-wrapper">
                       </div>
                       <span className="header__user-name user__name">{userName}</span>
@@ -57,7 +56,7 @@ function Header(): JSX.Element {
                       to={AppRoute.Login}
                       onClick={() => dispatch(logoutAction())}
                     >
-                      <span className="header__signout">Sign out</span>
+                      <span className="header__signout" data-testid='header__signout'>Sign out</span>
                     </Link>
                   </li>
                 </>}
