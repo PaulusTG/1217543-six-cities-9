@@ -53,7 +53,7 @@ function ReviewForm(): JSX.Element {
         </label>
 
         <input onChange={onFieldChange} className="form__rating-input visually-hidden" name="rating" value="4" id="4-stars" type="radio" />
-        <label htmlFor="4-stars" className="reviews__rating-label form__rating-label" title="good">
+        <label htmlFor="4-stars" className="reviews__rating-label form__rating-label" title="good" data-testid='label-rating'>
           <svg className="form__star-image" width="37" height="33">
             <use xlinkHref="#icon-star"></use>
           </svg>
@@ -80,7 +80,7 @@ function ReviewForm(): JSX.Element {
           </svg>
         </label>
       </div>
-      <textarea onChange={onFieldChange} value={formData.comment} className="reviews__textarea form__textarea" id="review" name="comment" placeholder="Tell how was your stay, what you like and what can be improved"></textarea>
+      <textarea onChange={onFieldChange} value={formData.comment} className="reviews__textarea form__textarea" id="review" data-testid='reviews__textarea' name="comment" placeholder="Tell how was your stay, what you like and what can be improved"></textarea>
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
           To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
@@ -90,6 +90,7 @@ function ReviewForm(): JSX.Element {
           className="reviews__submit form__submit button"
           type="button"
           disabled={isButtonDisabled}
+          data-testid='reviews__submit'
         >
           Submit
         </button>

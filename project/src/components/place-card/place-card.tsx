@@ -2,7 +2,6 @@ import { MouseEvent, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus, DEFAULT_OFFER } from '../../constants';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { store } from '../../store';
 import { setFavoritesAction } from '../../store/api-actions';
 import { loadRoom, setOffers } from '../../store/data-process/data-process';
 import { Offer } from '../../types/offer';
@@ -69,7 +68,7 @@ function PlaceCard({ offer, onPlacesListHover }: PlaceCardProps): JSX.Element {
       navigate(AppRoute.Login);
     }
     setIsFavoriteCard(!isFavorite);
-    store.dispatch(setFavoritesAction({ ...offer, id, isFavorite: !isFavorite }));
+    dispatch(setFavoritesAction({ ...offer, id, isFavorite: !isFavorite }));
     setTimeout(
       () => {
         dispatch(setOffers());
@@ -92,7 +91,7 @@ function PlaceCard({ offer, onPlacesListHover }: PlaceCardProps): JSX.Element {
       </div>
       <div className={`${pagePath === AppRoute.Favorites ? 'favorites__card-info' : ''} place-card__info`}>
         <div className="place-card__price-wrapper">
-          <div className="place-card__price">
+          <div className="place-card__price" data-testid='place-card__price'>
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
@@ -100,6 +99,7 @@ function PlaceCard({ offer, onPlacesListHover }: PlaceCardProps): JSX.Element {
             onClick={onBookmarkClick}
             className={`place-card__bookmark-button button ${isFavoriteCard ? 'place-card__bookmark-button--active' : ''}`}
             type="button"
+            data-testid='place-card__bookmark-button'
           >
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
@@ -114,9 +114,9 @@ function PlaceCard({ offer, onPlacesListHover }: PlaceCardProps): JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link onClick={onCardNameClick} to={`${AppRoute.Room}/${activeCard}`}>{title}</Link>
+          <Link onClick={onCardNameClick} to={`${AppRoute.Room}/${activeCard}`} data-testid='place-card__name'>{title}</Link>
         </h2>
-        <p className="place-card__type">{type}</p>
+        <p className="place-card__type" data-testid='place-card__type'>{type}</p>
       </div>
     </article>
   );

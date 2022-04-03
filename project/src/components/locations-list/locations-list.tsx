@@ -17,13 +17,14 @@ function LocationsList({ currentCity }: LocationsListProp): JSX.Element {
   };
 
   return (
-    <ul className="locations__list tabs__list">
+    <ul className="locations__list tabs__list" data-testid='locations__list'>
       {CITIES.map((city) => (
         <li key={`${city.name}`} className="locations__item">
           <a
             onClick={onCityClick}
-            className={`locations__item-link tabs__item ${city.name === currentCity ? 'tabs__item--active' : ''}`}
+            className={`locations__item-link  ${city.name === currentCity ? 'tabs__item--active' : ''}`}
             href="/"
+            data-testid='tabs__item'
           >
             <span>{city.name}</span>
           </a>

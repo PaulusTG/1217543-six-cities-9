@@ -50,7 +50,7 @@ function MainPage(): JSX.Element {
                   />
                 </div>
               </section>}
-            <div className="cities__right-section">
+            <div className="cities__right-section" data-testid='cities__map'>
               < Map
                 city={currentCity}
                 points={points}
