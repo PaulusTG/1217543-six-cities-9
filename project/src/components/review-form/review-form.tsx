@@ -10,7 +10,7 @@ function ReviewForm(): JSX.Element {
   const [formData, setFromData] = useState<NewReview>({
     rating: 0,
     comment: '',
-    roomId: room.id,
+    roomId: 0,
   });
 
   const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(true);
@@ -35,7 +35,7 @@ function ReviewForm(): JSX.Element {
       onSubmit({
         rating,
         comment,
-        roomId,
+        roomId: room.id,
       });
     }
     setFromData({ rating: 0, comment: '', roomId: null });
