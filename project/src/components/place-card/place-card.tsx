@@ -1,10 +1,12 @@
 import { MouseEvent, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { AppRoute, AuthorizationStatus, DEFAULT_OFFER } from '../../constants';
+import { AppRoute, AuthorizationStatus/*, DEFAULT_OFFER*/ } from '../../constants';
 import { useAppDispatch, useAppSelector } from '../../hooks';
+import { errorHandle } from '../../services/error-handle';
 import { setFavoritesAction } from '../../store/api-actions';
-import { loadRoom, setOffers } from '../../store/data-process/data-process';
+import { /*loadRoom,*/ setOffers } from '../../store/data-process/data-process';
 import { Offer } from '../../types/offer';
+import { dispatchOfferData } from '../../utils/dispatch-offer-data';
 
 const ROOM_LOAD_DELAY = 300;
 
@@ -51,18 +53,24 @@ function PlaceCard({ offer, onPlacesListHover }: PlaceCardProps): JSX.Element {
     setActiveCard(id);
   };
 
-  const onCardNameClick = (evt: MouseEvent<HTMLAnchorElement>) => {
+  const cardNameClickHandle = async (evt: MouseEvent<HTMLAnchorElement>) => {
     evt.preventDefault();
-    dispatch(loadRoom(DEFAULT_OFFER));
-    setTimeout(
+    // dispatch(loadRoom(DEFAULT_OFFER));
+    try {
+      await dispatchOfferData(Number(id));
+    } catch (error) {
+      errorHandle(error);
+    }
+    navigate(`${AppRoute.Room}/${activeCard}`);
+    /*setTimeout(
       () => {
         navigate(`${AppRoute.Room}/${activeCard}`);
       },
       ROOM_LOAD_DELAY,
-    );
+    );*/
   };
 
-  const onBookmarkClick = (evt: MouseEvent<HTMLButtonElement>) => {
+  const bookmarkClickHandle = (evt: MouseEvent<HTMLButtonElement>) => {
     evt.preventDefault();
     if (authorizationStatus !== AuthorizationStatus.Auth) {
       navigate(AppRoute.Login);
@@ -96,8 +104,8 @@ function PlaceCard({ offer, onPlacesListHover }: PlaceCardProps): JSX.Element {
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
           <button
-            onClick={onBookmarkClick}
-            className={`place-card__bookmark-button button ${isFavoriteCard ? 'place-card__bookmark-button--active' : ''}`}
+            onClick={bookmarkClickHandle}
+            className={`place-card__bookmark-button button ${isFavoriteCard && authorizationStatus === AuthorizationStatus.Auth ? 'place-card__bookmark-button--active' : ''}`}
             type="button"
             data-testid='place-card__bookmark-button'
           >
@@ -114,9 +122,9 @@ function PlaceCard({ offer, onPlacesListHover }: PlaceCardProps): JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link onClick={onCardNameClick} to={`${AppRoute.Room}/${activeCard}`} data-testid='place-card__name'>{title}</Link>
+          <Link onClick={cardNameClickHandle} to={`${AppRoute.Room}/${activeCard}`} data-testid='place-card__name'>{title}</Link>
         </h2>
-        <p className="place-card__type" data-testid='place-card__type'>{type}</p>
+        <p className="place-card__type" data-testid='place-card__type'>{type ? type[0].toUpperCase() + type.slice(1) : ''}</p>
       </div>
     </article>
   );

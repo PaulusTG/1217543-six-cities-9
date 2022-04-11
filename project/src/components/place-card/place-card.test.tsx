@@ -53,9 +53,9 @@ describe('Component: PlaceCard', () => {
   });
 
   it('should work correctly by bookmark click', () => {
-    const onBookmarkClick = jest.fn();
+    const bookmarkClickHandle = jest.fn();
     const useDispatch = jest.spyOn(Redux, 'useDispatch');
-    useDispatch.mockReturnValue(onBookmarkClick);
+    useDispatch.mockReturnValue(bookmarkClickHandle);
 
     render(
       <Provider store={store}>
@@ -65,8 +65,8 @@ describe('Component: PlaceCard', () => {
       </Provider>,
     );
 
-    expect(onBookmarkClick).toHaveBeenCalledTimes(0);
+    expect(bookmarkClickHandle).toHaveBeenCalledTimes(0);
     userEvent.click(screen.getByTestId('place-card__bookmark-button'));
-    expect(onBookmarkClick).toHaveBeenCalledTimes(1);
+    expect(bookmarkClickHandle).toHaveBeenCalledTimes(1);
   });
 });

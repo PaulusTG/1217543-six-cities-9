@@ -3,6 +3,16 @@ import { Offer } from './types/offer';
 
 const LAYER_URL = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png';
 const LAYER_ATTRIBUTION = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>';
+const MIN_COMMENT_LENGTH = 50;
+const MAX_COMMENT_LENGTH = 300;
+
+enum RatingStars {
+  one = 1,
+  two = 2,
+  three = 3,
+  four = 4,
+  five = 5,
+}
 
 enum AppRoute {
   Main = '/',
@@ -34,7 +44,7 @@ enum APIRoute {
   Logout = '/logout',
 }
 
-enum HTTP_CODE {
+enum HTTPCode {
   BAD_REQUEST = 400,
   UNAUTHORIZED = 401,
   NOT_FOUND = 404,
@@ -131,4 +141,4 @@ const CITIES: City[] = [
   },
 ];
 
-export { AppRoute, AuthorizationStatus, SortType, APIRoute, HTTP_CODE, CITIES, DEFAULT_OFFER, NameSpace, LAYER_URL, LAYER_ATTRIBUTION };
+export { AppRoute, AuthorizationStatus, SortType, APIRoute, HTTPCode, CITIES, DEFAULT_OFFER, NameSpace, LAYER_URL, LAYER_ATTRIBUTION, MIN_COMMENT_LENGTH, MAX_COMMENT_LENGTH, RatingStars };

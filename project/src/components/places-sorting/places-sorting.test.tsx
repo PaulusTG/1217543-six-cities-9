@@ -28,9 +28,9 @@ describe('Component: PlacesSorting', () => {
   });
 
   it('should work correctly by sort option click', () => {
-    const onSortTypeClick = jest.fn();
+    const sortTypeClickHandle = jest.fn();
     const useDispatch = jest.spyOn(Redux, 'useDispatch');
-    useDispatch.mockReturnValue(onSortTypeClick);
+    useDispatch.mockReturnValue(sortTypeClickHandle);
 
     render(
       <Provider store={store}>
@@ -40,9 +40,9 @@ describe('Component: PlacesSorting', () => {
       </Provider>,
     );
 
-    expect(onSortTypeClick).toHaveBeenCalledTimes(0);
+    expect(sortTypeClickHandle).toHaveBeenCalledTimes(0);
     screen.getAllByTestId('places__option').forEach((item, index) => {
-      expect(onSortTypeClick).toHaveBeenCalledTimes(index * 2);
+      expect(sortTypeClickHandle).toHaveBeenCalledTimes(index * 2);
       userEvent.click(item);
     });
   });

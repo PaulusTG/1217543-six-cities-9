@@ -1,7 +1,7 @@
 import { renderHook } from '@testing-library/react-hooks';
 import { Map } from 'leaflet';
 import { makeFakeCity } from '../utils/mocks';
-import useMap from './useMap';
+import useMap from './use-map';
 
 const fakeCity = makeFakeCity();
 

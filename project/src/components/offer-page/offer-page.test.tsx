@@ -38,9 +38,9 @@ describe('Component: OfferPage', () => {
   });
 
   it('should work correctly by bookmark click', () => {
-    const onBookmarkClick = jest.fn();
+    const bookmarkClickHandle = jest.fn();
     const useDispatch = jest.spyOn(Redux, 'useDispatch');
-    useDispatch.mockReturnValue(onBookmarkClick);
+    useDispatch.mockReturnValue(bookmarkClickHandle);
 
     render(
       <Provider store={store}>
@@ -50,8 +50,8 @@ describe('Component: OfferPage', () => {
       </Provider>,
     );
 
-    expect(onBookmarkClick).toHaveBeenCalledTimes(1);
+    expect(bookmarkClickHandle).toHaveBeenCalledTimes(1);
     userEvent.click(screen.getByTestId('bookmark-button'));
-    expect(onBookmarkClick).toHaveBeenCalledTimes(2);
+    expect(bookmarkClickHandle).toHaveBeenCalledTimes(2);
   });
 });

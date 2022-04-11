@@ -1,6 +1,6 @@
 import { Icon, Marker } from 'leaflet';
 import { useEffect, useRef } from 'react';
-import useMap from '../../hooks/useMap';
+import useMap from '../../hooks/use-map';
 import { City } from '../../types/city';
 import { Location } from '../../types/location';
 import 'leaflet/dist/leaflet.css';
@@ -21,14 +21,14 @@ type MapProps = {
 
 const defaultCustomIcon = new Icon({
   iconUrl: 'img/pin.svg',
-  iconSize: [40, 40],
-  iconAnchor: [20, 40],
+  iconSize: [27, 39],
+  iconAnchor: [13.5, 39],
 });
 
 const currentCustomIcon = new Icon({
   iconUrl: 'img/pin-active.svg',
-  iconSize: [40, 40],
-  iconAnchor: [20, 40],
+  iconSize: [27, 39],
+  iconAnchor: [13.5, 39],
 });
 
 function Map({ city, points, selectedPoint, mapClassName, style }: MapProps): JSX.Element {

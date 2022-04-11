@@ -1,30 +1,50 @@
-import { FormEvent, useRef } from 'react';
+import { ChangeEvent, FormEvent, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { AppRoute } from '../../constants';
-import { useAppDispatch, useAppSelector } from '../../hooks';
+import { AppRoute, CITIES } from '../../constants';
+import { useAppDispatch } from '../../hooks';
 import { loginAction } from '../../store/api-actions';
+import { changeCity, setOffers } from '../../store/data-process/data-process';
 import { AuthData } from '../../types/auth-data';
+import { City } from '../../types/city';
+import { getRandomNumber } from '../../utils/utils';
 
 function LoginPage(): JSX.Element {
-  const { city } = useAppSelector(({ DATA }) => DATA);
+  const randomCity: City = CITIES[getRandomNumber(0, 5)];
+  const { name } = randomCity;
 
-  const emailRef = useRef<HTMLInputElement | null>(null);
-  const passwordRef = useRef<HTMLInputElement | null>(null);
+  const handleLinkClick = (): void => {
+    dispatch(changeCity(name));
+    dispatch(setOffers());
+  };
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleEmailChange = (evt: ChangeEvent<HTMLInputElement>) => {
+    evt.preventDefault();
+    const { value } = evt.target;
+    setEmail(value);
+  };
+
+  const handlePasswordChange = (evt: ChangeEvent<HTMLInputElement>) => {
+    evt.preventDefault();
+    const { value } = evt.target;
+    setPassword(value);
+  };
 
   const onSubmit = (authData: AuthData) => {
     dispatch(loginAction(authData));
   };
 
-  const handleClick = (evt: FormEvent<HTMLButtonElement>) => {
+  const handleFormSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-
-    if (emailRef.current !== null && passwordRef.current !== null) {
+    if (email !== '' && password !== '' && !email.includes(' ') && !password.includes(' ')) {
       onSubmit({
-        email: emailRef.current.value,
-        password: passwordRef.current.value,
+        email,
+        password,
       });
       navigate(AppRoute.Main);
     }
@@ -52,16 +72,18 @@ function LoginPage(): JSX.Element {
               className="login__form form"
               action="#"
               method='post'
+              onSubmit={handleFormSubmit}
             >
               <div className="login__input-wrapper form__input-wrapper">
                 <label htmlFor='email' className="visually-hidden">E-mail</label>
                 <input
                   id='email'
-                  ref={emailRef}
                   className="login__input form__input"
                   type="email"
                   name="email"
                   placeholder="Email"
+                  value={email}
+                  onChange={handleEmailChange}
                   required
                 />
               </div>
@@ -69,18 +91,18 @@ function LoginPage(): JSX.Element {
                 <label htmlFor='password' className="visually-hidden">Password</label>
                 <input
                   id='password'
-                  ref={passwordRef}
                   className="login__input form__input"
                   type="password"
                   name="password"
                   placeholder="Password"
+                  value={password}
+                  onChange={handlePasswordChange}
                   required
                 />
               </div>
               <button
-                onClick={handleClick}
                 className="login__submit form__submit button"
-                type="button"
+                type="submit"
                 data-testid='login__submit'
               >
                 Sign in
@@ -89,8 +111,8 @@ function LoginPage(): JSX.Element {
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <Link className="locations__item-link" to={AppRoute.Main}>
-                <span>{city}</span>
+              <Link className="locations__item-link" to={AppRoute.Main} onClick={handleLinkClick}>
+                <span>{name}</span>
               </Link>
             </div>
           </section>

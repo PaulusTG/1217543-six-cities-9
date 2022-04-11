@@ -5,13 +5,14 @@ import Map from '../map/map';
 import PlacesList from '../places-list/places-list';
 import { AppRoute, AuthorizationStatus } from '../../constants';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { dispatchOfferData } from '../../utils/dispatch-offer-data';
+// import { dispatchOfferData } from '../../utils/dispatch-offer-data';
 import { useParams, useNavigate } from 'react-router-dom';
 import { MouseEvent } from 'react';
 import { setFavoritesAction } from '../../store/api-actions';
 import { loadRoom, setOffers } from '../../store/data-process/data-process';
 
 const ROOM_LOAD_DELAY = 300;
+const IMAGE_MAX_COUNT = 6;
 
 function OfferPage(): JSX.Element {
   const params = useParams();
@@ -23,9 +24,9 @@ function OfferPage(): JSX.Element {
 
   if (!offers.find((offer) => offer.id === Number(params.id))) {
     navigate(AppRoute.NotFound);
-  } else if (room.id !== Number(params.id)) {
+  } /*else if (room.id !== Number(params.id)) {
     dispatchOfferData(Number(params.id));
-  }
+  }*/
 
   const { id, isPremium, isFavorite, price, rating,
     title, type, images, bedrooms, maxAdults,
@@ -36,7 +37,7 @@ function OfferPage(): JSX.Element {
 
   const mapStyle = { width: '1144px', margin: '0 auto 50px auto' };
 
-  const onBookmarkClick = (evt: MouseEvent<HTMLButtonElement>) => {
+  const bookmarkClickHandle = (evt: MouseEvent<HTMLButtonElement>) => {
     evt.preventDefault();
     if (authorizationStatus !== AuthorizationStatus.Auth) {
       navigate(AppRoute.Login);
@@ -58,7 +59,7 @@ function OfferPage(): JSX.Element {
         <section className="property">
           <div className="property__gallery-container container">
             <div className="property__gallery">
-              {images.map((image, key) => {
+              {images.slice(0, IMAGE_MAX_COUNT).map((image, key) => {
                 const keyValue = `${key}_${image}`;
                 return (
                   <div key={keyValue} className="property__image-wrapper">
@@ -76,7 +77,7 @@ function OfferPage(): JSX.Element {
                   {title}
                 </h1>
                 <button
-                  onClick={onBookmarkClick}
+                  onClick={bookmarkClickHandle}
                   className={`property__bookmark-button button ${isFavorite ? 'property__bookmark-button--active' : ''}`}
                   type="button"
                   data-testid='bookmark-button'
@@ -96,7 +97,7 @@ function OfferPage(): JSX.Element {
               </div>
               <ul className="property__features">
                 <li className="property__feature property__feature--entire">
-                  {type}
+                  {type ? type[0].toUpperCase() + type.slice(1) : ''}
                 </li>
                 <li className="property__feature property__feature--bedrooms">
                   {bedrooms} Bedrooms
