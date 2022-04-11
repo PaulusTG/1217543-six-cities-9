@@ -4,7 +4,7 @@ import { AppRoute, AuthorizationStatus/*, DEFAULT_OFFER*/ } from '../../constant
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { errorHandle } from '../../services/error-handle';
 import { setFavoritesAction } from '../../store/api-actions';
-import { /*loadRoom,*/ setOffers } from '../../store/data-process/data-process';
+import { setOffers } from '../../store/data-process/data-process';
 import { Offer } from '../../types/offer';
 import { dispatchOfferData } from '../../utils/dispatch-offer-data';
 
@@ -55,19 +55,12 @@ function PlaceCard({ offer, onPlacesListHover }: PlaceCardProps): JSX.Element {
 
   const cardNameClickHandle = async (evt: MouseEvent<HTMLAnchorElement>) => {
     evt.preventDefault();
-    // dispatch(loadRoom(DEFAULT_OFFER));
     try {
       await dispatchOfferData(Number(id));
     } catch (error) {
       errorHandle(error);
     }
     navigate(`${AppRoute.Room}/${activeCard}`);
-    /*setTimeout(
-      () => {
-        navigate(`${AppRoute.Room}/${activeCard}`);
-      },
-      ROOM_LOAD_DELAY,
-    );*/
   };
 
   const bookmarkClickHandle = (evt: MouseEvent<HTMLButtonElement>) => {

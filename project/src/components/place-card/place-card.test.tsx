@@ -34,24 +34,6 @@ describe('Component: PlaceCard', () => {
     expect(screen.getByTestId('place-card__name')).toBeInTheDocument();
   });
 
-  it('should work correctly by card name click', () => {
-    const loadRoom = jest.fn();
-    const useDispatch = jest.spyOn(Redux, 'useDispatch');
-    useDispatch.mockReturnValue(loadRoom);
-
-    render(
-      <Provider store={store}>
-        <HistoryRouter history={history}>
-          <PlaceCard offer={offer} onPlacesListHover={onPlacesListHover} />
-        </HistoryRouter>
-      </Provider>,
-    );
-
-    expect(loadRoom).toHaveBeenCalledTimes(0);
-    userEvent.click(screen.getByTestId('place-card__name'));
-    expect(loadRoom).toHaveBeenCalledTimes(1);
-  });
-
   it('should work correctly by bookmark click', () => {
     const bookmarkClickHandle = jest.fn();
     const useDispatch = jest.spyOn(Redux, 'useDispatch');
