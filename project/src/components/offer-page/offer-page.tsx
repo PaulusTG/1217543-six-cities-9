@@ -5,11 +5,12 @@ import Map from '../map/map';
 import PlacesList from '../places-list/places-list';
 import { AppRoute, AuthorizationStatus } from '../../constants';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-// import { dispatchOfferData } from '../../utils/dispatch-offer-data';
 import { useParams, useNavigate } from 'react-router-dom';
 import { MouseEvent } from 'react';
 import { setFavoritesAction } from '../../store/api-actions';
 import { loadRoom, setOffers } from '../../store/data-process/data-process';
+import { getAuthorizationStatus } from '../../store/user-process/selectors';
+import { getOffers, getOffersNearby, getReviews, getRoom } from '../../store/data-process/selectors';
 
 const ROOM_LOAD_DELAY = 300;
 const IMAGE_MAX_COUNT = 6;
@@ -19,14 +20,15 @@ function OfferPage(): JSX.Element {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const { offers, room, reviews, offersNearby } = useAppSelector(({ DATA }) => DATA);
-  const { authorizationStatus } = useAppSelector(({ USER }) => USER);
+  const offers = useAppSelector(getOffers);
+  const room = useAppSelector(getRoom);
+  const reviews = useAppSelector(getReviews);
+  const offersNearby = useAppSelector(getOffersNearby);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   if (!offers.find((offer) => offer.id === Number(params.id))) {
     navigate(AppRoute.NotFound);
-  } /*else if (room.id !== Number(params.id)) {
-    dispatchOfferData(Number(params.id));
-  }*/
+  }
 
   const { id, isPremium, isFavorite, price, rating,
     title, type, images, bedrooms, maxAdults,

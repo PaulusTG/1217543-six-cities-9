@@ -1,7 +1,8 @@
 import { useAppSelector } from '../../hooks';
+import { getCity } from '../../store/data-process/selectors';
 
 function MainEmpty(): JSX.Element {
-  const { city } = useAppSelector(({ DATA }) => DATA);
+  const city = useAppSelector(getCity);
 
   return (
     <section className="cities__no-places">

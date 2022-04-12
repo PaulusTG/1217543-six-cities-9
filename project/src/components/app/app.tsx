@@ -8,10 +8,12 @@ import NotFoundPage from '../not-found-page/not-found-page';
 import PrivateRoute from '../private-route/private-route';
 import { useAppSelector } from '../../hooks';
 import LoadingScreen from '../loading-screen/loading-screen';
+import { getAuthorizationStatus } from '../../store/user-process/selectors';
+import { getIsDataLoaded } from '../../store/data-process/selectors';
 
 function App(): JSX.Element {
-  const { authorizationStatus } = useAppSelector(({ USER }) => USER);
-  const { isDataLoaded } = useAppSelector(({ DATA }) => DATA);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const isDataLoaded = useAppSelector(getIsDataLoaded);
 
   if (!isDataLoaded) {
     return (

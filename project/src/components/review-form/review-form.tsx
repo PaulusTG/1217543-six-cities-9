@@ -3,10 +3,11 @@ import { MAX_COMMENT_LENGTH, MIN_COMMENT_LENGTH, RatingStars } from '../../const
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { errorHandle } from '../../services/error-handle';
 import { addReviewAction } from '../../store/api-actions';
+import { getRoom } from '../../store/data-process/selectors';
 
 function ReviewForm(): JSX.Element {
   const dispatch = useAppDispatch();
-  const { room } = useAppSelector(({ DATA }) => DATA);
+  const room = useAppSelector(getRoom);
 
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState('');
@@ -53,7 +54,7 @@ function ReviewForm(): JSX.Element {
 
   return (
     <form className="reviews__form form" action="#" method="post" onSubmit={handlerFormSubmit}>
-      <fieldset style={{ border: 'none' }}>
+      <fieldset className='reviews__fieldset' style={{ border: 'none' }}>
         <label className="reviews__label form__label" htmlFor="review">Your review</label>
         <div className="reviews__rating-form form__rating">
           <input onChange={handlerRadioClick} className="form__rating-input visually-hidden" name="rating" value={RatingStars.five} id="5-stars" type="radio" checked={rating === RatingStars.five} />

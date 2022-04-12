@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { errorHandle } from '../../services/error-handle';
 import { setFavoritesAction } from '../../store/api-actions';
 import { setOffers } from '../../store/data-process/data-process';
+import { getAuthorizationStatus } from '../../store/user-process/selectors';
 import { Offer } from '../../types/offer';
 import { dispatchOfferData } from '../../utils/dispatch-offer-data';
 
@@ -19,7 +20,7 @@ function PlaceCard({ offer, onPlacesListHover }: PlaceCardProps): JSX.Element {
   const dispatch = useAppDispatch();
   const pagePath = useLocation().pathname;
 
-  const { authorizationStatus } = useAppSelector(({ USER }) => USER);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   const { id, previewImage, isPremium, isFavorite,
     price, rating, title, type } = offer;

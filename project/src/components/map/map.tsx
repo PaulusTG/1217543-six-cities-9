@@ -7,6 +7,7 @@ import 'leaflet/dist/leaflet.css';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { addLayerToMap } from '../../utils/utils';
 import { setIsNeedMapLayerUpdate } from '../../store/data-process/data-process';
+import { getIsNeedMapLayerUpdate } from '../../store/data-process/selectors';
 
 type MapProps = {
   city: City;
@@ -35,7 +36,7 @@ function Map({ city, points, selectedPoint, mapClassName, style }: MapProps): JS
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
   const dispatch = useAppDispatch();
-  const { isNeedMapLayerUpdate } = useAppSelector(({ DATA }) => DATA);
+  const isNeedMapLayerUpdate = useAppSelector(getIsNeedMapLayerUpdate);
 
   useEffect(() => {
     if (map) {

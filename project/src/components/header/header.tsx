@@ -3,13 +3,15 @@ import { Link, useNavigate } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../constants';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchFavoritesAction, logoutAction } from '../../store/api-actions';
+import { getAuthorizationStatus, getUserName } from '../../store/user-process/selectors';
 
 const ROOM_LOAD_DELAY = 300;
 
 function Header(): JSX.Element {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { authorizationStatus, userName } = useAppSelector(({ USER }) => USER);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const userName = useAppSelector(getUserName);
 
   const onClick = (evt: MouseEvent<HTMLAnchorElement>) => {
     evt.preventDefault();

@@ -2,9 +2,10 @@ import { MouseEvent, useState } from 'react';
 import { SortType } from '../../constants';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { changeSortType, sortOffers } from '../../store/data-process/data-process';
+import { getSortType } from '../../store/data-process/selectors';
 
 function PlacesSorting(): JSX.Element {
-  const { sortType } = useAppSelector(({ DATA }) => DATA);
+  const sortType = useAppSelector(getSortType);
   const [isOptionsOpened, setIsOptionsOpened] = useState<boolean>(false);
   const dispatch = useAppDispatch();
 

@@ -1,12 +1,13 @@
 import { Link } from 'react-router-dom';
 import { AppRoute, CITIES } from '../../constants';
 import { useAppSelector } from '../../hooks';
+import { getFavorites } from '../../store/data-process/selectors';
 import FavoritesEmpty from '../favorites-empty/favorites-empty';
 import Header from '../header/header';
 import PlacesList from '../places-list/places-list';
 
 function FavoritesPage(): JSX.Element {
-  const { favorites } = useAppSelector(({ DATA }) => DATA);
+  const favorites = useAppSelector(getFavorites);
 
   return (
     <div className="page">

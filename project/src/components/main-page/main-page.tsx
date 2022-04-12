@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { CITIES } from '../../constants';
 import { useAppSelector } from '../../hooks';
+import { getCity, getCurrentOffers } from '../../store/data-process/selectors';
 import { Location } from '../../types/location';
 import Header from '../header/header';
 import LocationsList from '../locations-list/locations-list';
@@ -10,7 +11,8 @@ import PlacesList from '../places-list/places-list';
 import PlacesSorting from '../places-sorting/places-sorting';
 
 function MainPage(): JSX.Element {
-  const { city, currentOffers } = useAppSelector(({ DATA }) => DATA);
+  const currentOffers = useAppSelector(getCurrentOffers);
+  const city = useAppSelector(getCity);
 
   const currentCity = CITIES.filter((cityItem) => cityItem.name === city)[0];
   const points = currentOffers.map((offer) => offer.location);

@@ -20,7 +20,7 @@ export const initialState: DataProcess = {
 };
 
 export const dataProcess = createSlice({
-  name: NameSpace.data,
+  name: NameSpace.Data,
   initialState,
   reducers: {
     loadOffers: (state, action) => {

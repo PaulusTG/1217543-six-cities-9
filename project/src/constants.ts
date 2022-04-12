@@ -51,8 +51,8 @@ enum HTTPCode {
 }
 
 enum NameSpace {
-  data = 'DATA',
-  user = 'USER',
+  Data = 'DATA',
+  User = 'USER',
 }
 
 const DEFAULT_OFFER: Offer = {

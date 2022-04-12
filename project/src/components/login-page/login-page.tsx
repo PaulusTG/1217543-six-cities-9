@@ -41,7 +41,7 @@ function LoginPage(): JSX.Element {
 
   const handleFormSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    if (email !== '' && password !== '' && !email.includes(' ') && !password.includes(' ')) {
+    if (email !== '' && password !== '' && !email.includes(' ') && password.match(/^(?=.*\d)(?=.*[a-zA-Z])[\da-zA-Z!@#$%^&*()]{1,}$/)) {
       onSubmit({
         email,
         password,
