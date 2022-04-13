@@ -162,9 +162,11 @@ function OfferPage(): JSX.Element {
         <div className="container">
           <section className="near-places places" data-testid='near-places'>
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <div className="near-places__list places__list">
-              <PlacesList offers={offersNearby} onPlacesListHover={() => null} />
-            </div>
+            <PlacesList
+              offers={offersNearby}
+              onPlacesListHover={() => null}
+              pageClass="near-places__list places__list"
+            />
           </section>
         </div>
       </main>

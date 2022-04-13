@@ -45,12 +45,11 @@ function MainPage(): JSX.Element {
                 <h2 className="visually-hidden">Places</h2>
                 <b className="places__found">{currentOffers.length} places to stay in {city}</b>
                 <PlacesSorting />
-                <div className="cities__places-list places__list tabs__content">
-                  < PlacesList
-                    offers={currentOffers}
-                    onPlacesListHover={onPlacesListHover}
-                  />
-                </div>
+                < PlacesList
+                  offers={currentOffers}
+                  onPlacesListHover={onPlacesListHover}
+                  pageClass="cities__places-list places__list tabs__content"
+                />
               </section>}
             <div className="cities__right-section" data-testid='cities__map'>
               < Map

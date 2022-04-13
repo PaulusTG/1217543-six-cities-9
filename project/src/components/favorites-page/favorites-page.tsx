@@ -31,12 +31,11 @@ function FavoritesPage(): JSX.Element {
                             </Link>
                           </div>
                         </div>
-                        <div className="favorites__places">
-                          <PlacesList
-                            offers={groupedFavorites}
-                            onPlacesListHover={() => null}
-                          />
-                        </div>
+                        <PlacesList
+                          offers={groupedFavorites}
+                          onPlacesListHover={() => null}
+                          pageClass="favorites__places"
+                        />
                       </li>);
                   }
                   return '';

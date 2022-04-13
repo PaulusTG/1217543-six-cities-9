@@ -2,31 +2,25 @@ import { configureMockStore } from '@jedmao/redux-mock-store';
 import { render, screen } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
 import { Provider } from 'react-redux';
-import { DEFAULT_OFFER } from '../../constants';
 import { makeFakeReview } from '../../utils/mocks';
 import HistoryRouter from '../history-route/history-route';
-import ReviewForm from './review-form';
+import ReviewsList from './reviews-list';
 
 const mockStore = configureMockStore();
-const room = DEFAULT_OFFER;
-const reviews = [makeFakeReview()];
-const store = mockStore({
-  DATA: { room, reviews },
-});
+const review = [makeFakeReview()];
+const store = mockStore({});
 const history = createMemoryHistory();
 
-describe('Component: ReviewForm', () => {
-  it('should render "ReviewForm"', () => {
+describe('Component: ReviewsList', () => {
+  it('should render "ReviewsList"', () => {
     render(
       <Provider store={store}>
         <HistoryRouter history={history}>
-          <ReviewForm />
+          <ReviewsList reviews={review} />
         </HistoryRouter>
       </Provider>,
     );
 
-    expect(screen.getByLabelText('Your review')).toBeInTheDocument();
-    expect(screen.getByTestId('reviews__textarea')).toBeInTheDocument();
-    expect(screen.getByTestId('reviews__submit')).toBeInTheDocument();
+    expect(screen.getByTestId('reviews-list')).toBeInTheDocument();
   });
 });
