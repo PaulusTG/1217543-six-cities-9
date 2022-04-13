@@ -1,13 +1,14 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { MAX_COMMENT_LENGTH, MIN_COMMENT_LENGTH, RatingStars } from '../../constants';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { errorHandle } from '../../services/error-handle';
 import { addReviewAction } from '../../store/api-actions';
-import { getRoom } from '../../store/data-process/selectors';
+import { getReviews, getRoom } from '../../store/data-process/selectors';
 
 function ReviewForm(): JSX.Element {
   const dispatch = useAppDispatch();
   const room = useAppSelector(getRoom);
+  const reviews = useAppSelector(getReviews);
+  let prevRevCount = 0;
 
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState('');
@@ -34,21 +35,22 @@ function ReviewForm(): JSX.Element {
   const fieldset: HTMLFieldSetElement | null =
     document.querySelector('.reviews__fieldset');
 
-  const sendReview = async () => {
-    try {
-      await dispatch(addReviewAction({ roomId: room.id, comment, rating }));
+  useEffect(() => {
+    if (prevRevCount !== reviews.length) {
       setComment('');
       setRating(0);
-      (fieldset as HTMLFieldSetElement).disabled = false;
-    } catch (error) {
-      errorHandle(error);
-      (fieldset as HTMLFieldSetElement).disabled = false;
     }
+  }, [prevRevCount, reviews.length]);
+
+  const sendReview = async () => {
+    await dispatch(addReviewAction({ roomId: room.id, comment, rating }));
+    (fieldset as HTMLFieldSetElement).disabled = false;
   };
 
   const handlerFormSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     (fieldset as HTMLFieldSetElement).disabled = true;
+    prevRevCount = reviews.length;
     sendReview();
   };
 
