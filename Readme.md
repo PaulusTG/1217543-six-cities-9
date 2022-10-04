@@ -13,19 +13,19 @@
 
 #### Главная страница
 
-![](./github/images/main_page.png)
+![](./.github/images/main_page.png)
 
 #### Страница авторизации
 
-![](./github/images/login_page.png)
+![](./.github/images/login_page.png)
 
 #### Страница объявления
 
-![](./github/images/offer_page.png)
+![](./.github/images/offer_page.png)
 
 #### Форма комментариев
 
-![](./github/images/reviews_form.png)
+![](./.github/images/reviews_form.png)
 
 ---
 
